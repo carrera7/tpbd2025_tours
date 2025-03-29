@@ -5,10 +5,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "guias_turisticos")
 public class TourGuideUser extends User {
 
+    @Column(name = "educacion")
     private String education;
 
+    @ManyToMany
+    @Column(name="ruta")
     private List<Route> routes;
 
 

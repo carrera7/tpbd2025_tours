@@ -57,7 +57,7 @@ public class HibernateConfiguration {
     }
 
     private int getGroupNumber(){
-        return 0;
+        return 8;
     }
 
 }

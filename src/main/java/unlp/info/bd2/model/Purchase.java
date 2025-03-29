@@ -3,24 +3,52 @@ package unlp.info.bd2.model;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "compras")
 public class Purchase {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "compras_id")
     Long id;
 
+    @Column(name = "codigo")
     private String code;
 
+    @Column(name = "precio_total")
     private float totalPrice;
 
+    @Column(name = "fecha")
     private Date date;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
+    @Column(name="usuario")
     private User user;
 
+    @OneToOne
+    @Column(name="ruta")
     private Route route;
 
+    @OneToOne
+    @Column(name="revision")
     private Review review;
 
+    @OneToMany
+    @Column(name="lista_de_item_de_servicio")
     private List<ItemService> itemServiceList;
-
 
 
     public Long getId() {
