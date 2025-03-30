@@ -117,4 +117,27 @@ public class User {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    /*
+     * agrega un purchase a la lista de compras del usuario
+     * si la lista no existe, la crea
+     * @param purchase el purchase a agregar
+     * @return void 
+     */
+
+    public void addPurchase(Purchase purchase) {
+        if (this.purchaseList == null) {
+            this.purchaseList = new ArrayList<>();
+        }
+        this.purchaseList.add(purchase);
+    }
+
+    /*
+     * desactiva el usuario
+     * @return boolean true si el usuario se puede desactivar, false si no
+     */
+
+    public boolean canBeDesactivated() {
+        return this.purchaseList == null || this.purchaseList.isEmpty();
+    }
 }

@@ -114,4 +114,33 @@ public class Purchase {
     public void setItemServiceList(List<ItemService> itemServiceList) {
         this.itemServiceList = itemServiceList;
     }
+
+    /*
+     *  agraga un nuevo item de servicio a la lista de item de servicio de la compra
+     *  @param itemService el item de servicio a agregar
+     *  @return void 
+     */
+
+    public void addItemService(ItemService itemService) {
+        this.itemServiceList.add(itemService);
+    }
+
+
+    /*
+     *  agrega una nueva revision a la compra
+     *  @param rating la calificacion de la revision
+     *  @param comment el comentario de la revision
+     *  @return Review la revision creada 
+     * 
+     * falta implementar la logica si es que existe una revision
+     *  
+     */
+    public Review addReview(int rating, String comment) {
+        this.review = new Review(rating, comment, this);
+        return this.review;
+    }
+
+
 }
+
+ 
