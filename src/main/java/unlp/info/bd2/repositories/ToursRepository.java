@@ -29,5 +29,5 @@ public interface ToursRepository {
    // add
     //delete 
     //update
-  // no se implementa en ToursRepositoryImpl ??
+  // no se implementa en ToursRepositoryImpl ??RUD
 }
