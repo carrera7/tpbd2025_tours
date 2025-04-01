@@ -21,10 +21,9 @@ import jakarta.persistence.Table;
 public class Stop {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)/*Deberia de ser auto o Identity? */
-    @Column(name = "paradas_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)/*Deberia de ser auto o Identity? trabajamos con sql */ 
+    @Column(name = "id_parada")
     private Long id;
-
     @Column(name = "nombre")
     private String name;
 
@@ -41,8 +40,8 @@ public class Stop {
 
     // @OneToMany(mappedBy = "stop", cascade = CascadeType.ALL, orphanRemoval = true)
     // private Route route;
-    @ManyToMany(mappedBy = "paradas")
-    private List<Route> routes;
+    // @ManyToMany(mappedBy = "stops")
+    // private List<Route> routes  no es necesario ssi es bidereccional ;
 
     public Stop(){}
 
