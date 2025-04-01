@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -17,7 +19,7 @@ import jakarta.persistence.Table;
 @Table(name = "routes")
 public class Route {
 
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "route_id")
     private Long id;
@@ -36,12 +38,20 @@ public class Route {
 
     /*
      * modificacion a @OneToMany
-     * @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
+     * 
+     * @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval =
+     * true)
+     * 
      * @JoinColumn(name = "route_id")
-     * private List<Stop> stops;    
+     * private List<Stop> stops;
      */
 
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)    @Column(name = "parada")
+    // @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval =
+    // true) @Column(name = "parada")
+    // private List<Stop> stops;
+
+    @ManyToMany
+    @JoinTable(name = "ruta_parada", joinColumns = @JoinColumn(name = "route_id"), inverseJoinColumns = @JoinColumn(name = "paradas_id"))
     private List<Stop> stops;
 
     @ManyToMany
@@ -125,7 +135,7 @@ public class Route {
         this.driverList.add(driver);
     }
 
-    public void addTourGuide(TourGuideUser tourGuide){
+    public void addTourGuide(TourGuideUser tourGuide) {
         this.tourGuideList.add(tourGuide);
     }
 
