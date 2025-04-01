@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class Stop {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)/*Deberia de ser auto o Identity? */
     @Column(name = "paradas_id")
     private Long id;
 
