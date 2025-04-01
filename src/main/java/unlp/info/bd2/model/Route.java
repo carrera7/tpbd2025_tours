@@ -139,4 +139,8 @@ public class Route {
         this.tourGuideList.add(tourGuide);
     }
 
+    public int getStopCount(){
+        return (stops != null ) ? stops.size() : 0;
+    }
+
 }
