@@ -1,4 +1,13 @@
 package unlp.info.bd2.repositories;
+import java.util.List;
+import java.util.Date;
+import unlp.info.bd2.model.Purchase;
+import unlp.info.bd2.model.Route;
+import unlp.info.bd2.model.Service;
+import unlp.info.bd2.model.Stop;
+import unlp.info.bd2.model.Supplier;
+import unlp.info.bd2.model.TourGuideUser;
+import unlp.info.bd2.model.User;
 
 public interface ToursRepository {
 
@@ -20,4 +29,5 @@ public interface ToursRepository {
    // add
     //delete 
     //update
+  // no se implementa en ToursRepositoryImpl ??
 }
