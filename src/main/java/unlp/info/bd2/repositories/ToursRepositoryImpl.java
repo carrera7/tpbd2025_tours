@@ -3,6 +3,9 @@ package unlp.info.bd2.repositories;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 import unlp.info.bd2.model.Purchase;
 import unlp.info.bd2.model.Route;
 import unlp.info.bd2.model.Service;
@@ -13,10 +16,20 @@ import unlp.info.bd2.model.User;
 
 public class ToursRepositoryImpl implements ToursRepository{
 
+    private SessionFactory sessionFactory;
+
+    public ToursRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public List<Purchase> getAllPurchasesOfUsername(String username) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllPurchasesOfUsername'");
+        String hql = "FROM User u WHERE u.username = :username";
+        Session session =  sessionFactory.openSession();
+        User user = session.createQuery(hql, User.class)
+                        .setParameter("username", username)
+                        .uniqueResult();
+        return (user != null) ? user.getPurchaseList() : List.of(); // Devuelve la lista de compras o una lista vacía
     }
 
     @Override
