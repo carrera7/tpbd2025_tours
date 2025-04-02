@@ -2,9 +2,8 @@ package unlp.info.bd2.repositories;
 
 import java.util.Date;
 import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 import unlp.info.bd2.model.Purchase;
 import unlp.info.bd2.model.Route;
@@ -16,14 +15,15 @@ import unlp.info.bd2.model.User;
 
 public class ToursRepositoryImpl implements ToursRepository{
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Override
     public List<Purchase> getAllPurchasesOfUsername(String username) {
-        String hql = "FROM User u WHERE u.username = :username";
-        Session session =  sessionFactory.openSession();
-        User user = session.createQuery(hql, User.class)
-                        .setParameter("username", username)
-                        .uniqueResult();
-        return (user != null) ? user.getPurchaseList() : List.of(); // Devuelve la lista de compras o una lista vacía
+        return entityManager.createQuery(
+            "FROM User u WHERE u.username = :username", Purchase.class)
+            .setParameter("username", username)
+            .getResultList();
     }
 
     @Override
