@@ -33,13 +33,11 @@ public class Service {
     @Column(name = "descripcion")
     private String description;
 
-    @OneToMany
-    @Column(name="lista_de_item_de_servicios")
+    @OneToMany(mappedBy = "service")
     private List<ItemService> itemServiceList;
 
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "proveedor_id", referencedColumnName = "id")
-    @Column(name="proveedor")
+    @JoinColumn(name = "proveedor_id", referencedColumnName = "proveedor_id")
     private Supplier supplier;
 
 

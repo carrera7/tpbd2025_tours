@@ -29,8 +29,7 @@ public class Supplier {
     @Column(name = "numero_authenticacion")
     private String authorizationNumber;
 
-    @OneToMany
-    @Column(name="servicio")
+    @OneToMany(mappedBy = "supplier")   
     private List<Service> services;
 
     public Long getId() {

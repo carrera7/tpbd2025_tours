@@ -34,7 +34,7 @@ public class Purchase {
     private Date date;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
+    @JoinColumn(name = "usuarios_id", referencedColumnName = "usuarios_id")
     private User user;
 
     @OneToOne

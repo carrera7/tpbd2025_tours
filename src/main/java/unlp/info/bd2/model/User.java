@@ -18,7 +18,7 @@ import jakarta.persistence.DiscriminatorType;
 
 @Entity
 @Table(name = "usuarios")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)//se crea 1 tabla por clase , incluyendo las abstractas , revisar DRIVER USERas , revisar DRIVER USER
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING) // Columna para diferenciar tipos de usuario
 public class User {
 

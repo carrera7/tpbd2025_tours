@@ -25,7 +25,7 @@ public class Review {
     private String comment;
 
     @OneToOne
-    @JoinColumn(name = "compra")
+    @JoinColumn(name = "compras_id", referencedColumnName = "compras_id")
     private Purchase purchase;
 
     public Review() {
