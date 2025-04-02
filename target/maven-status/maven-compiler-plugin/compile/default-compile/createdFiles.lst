@@ -1,0 +1,13 @@
+unlp\info\bd2\model\Service.class
+unlp\info\bd2\model\DriverUser.class
+unlp\info\bd2\model\TourGuideUser.class
+unlp\info\bd2\repositories\ToursRepository.class
+unlp\info\bd2\model\Purchase.class
+unlp\info\bd2\model\Supplier.class
+unlp\info\bd2\model\ItemService.class
+unlp\info\bd2\model\Route.class
+unlp\info\bd2\repositories\ToursRepositoryImpl.class
+unlp\info\bd2\repositories\StopRepository.class
+unlp\info\bd2\model\User.class
+unlp\info\bd2\model\Review.class
+unlp\info\bd2\model\Stop.class
