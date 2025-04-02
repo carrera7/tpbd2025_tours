@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import unlp.info.bd2.model.DriverUser;
 import unlp.info.bd2.model.ItemService;
 import unlp.info.bd2.model.Purchase;
@@ -14,10 +16,14 @@ import unlp.info.bd2.model.Stop;
 import unlp.info.bd2.model.Supplier;
 import unlp.info.bd2.model.TourGuideUser;
 import unlp.info.bd2.model.User;
+import unlp.info.bd2.repositories.StopRepository;
 import unlp.info.bd2.repositories.ToursRepository;
 import unlp.info.bd2.utils.ToursException;
 
 public class ToursServiceImpl implements ToursService{
+
+    @Autowired
+    private StopRepository stopRepository;
 
     public ToursServiceImpl(ToursRepository repository) {
         //TODO Auto-generated constructor stub
@@ -69,9 +75,16 @@ public class ToursServiceImpl implements ToursService{
     }
 
     @Override
-    public Stop createStop(String name, String description) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createStop'");
+    public Stop createStop(String name, String description) {
+        //verifico que no exista una parada con el mismo nombre
+        if (stopRepository.findByName(name).isPresent()) {
+            System.out.println("Ya existe una parada con ese nombre");
+            return null; 
+            // throw new ToursException("Ya existe una parada con ese nombre"); esto es necesario para el caso donde ya esta presente?ta presente?
+        }
+        //Crea y guardo la nueva parada
+        Stop stop = new Stop(name, description);
+        return stopRepository.save(stop);
     }
 
     @Override

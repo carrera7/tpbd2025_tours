@@ -22,12 +22,13 @@ public class ItemService {
     @Column(name = "Cantidad")
     private int quantity;
 
-    @Column(name = "compra")
+    //@Column(name = "compra") esto rompe el mvn , revisar si hay que sacar
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "compras_id", referencedColumnName = "id") // si se llega a romper el id de esto, es por los nombres
+    @JoinColumn(name = "compras_id", referencedColumnName = "compras_id") // si se llega a romper el id de esto, es por los nombres
     private Purchase purchase;
 
-    @Column(name = "servicio")
+    @ManyToOne
+    @JoinColumn(name = "servicio_id", referencedColumnName = "servicios_id")
     private Service service;
 
     public Long getId() {

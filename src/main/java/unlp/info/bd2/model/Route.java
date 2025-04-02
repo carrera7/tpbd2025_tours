@@ -6,9 +6,12 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -17,31 +20,40 @@ import jakarta.persistence.Table;
 @Table(name = "routes")
 public class Route {
 
-    @Id 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "route_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_route")
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "precio")
+    @Column(name = "price")
     private float price;
 
-    @Column(name = "km_totales")
+    @Column(name = "total_km")
     private float totalKm;
 
-    @Column(name = "numero_maximo_usuarios")
+    @Column(name = "max_number_users")
     private int maxNumberUsers;
 
     /*
      * modificacion a @OneToMany
-     * @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
+     * 
+     * @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval =
+     * true)
+     * 
      * @JoinColumn(name = "route_id")
-     * private List<Stop> stops;    
+     * private List<Stop> stops;
      */
 
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)    @Column(name = "parada")
+    // @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval =
+    // true) @Column(name = "parada")
+    // private List<Stop> stops;|
+
+    @ManyToMany(fetch = FetchType.EAGER )// ver el estandar por default, el persis solo permite guardado , pero como en los test genera las paradas y despues las rutas , se pueden scar todo tipo de cascade tyoe
+    //no va ophanage removal porque sis e queire tneer paradas sueltas para aa futuro asociar a rutas
+    @JoinTable(name = "route_stop", joinColumns = @JoinColumn(name = "id_route", nullable = false), inverseJoinColumns = @JoinColumn(name = "id_stop", nullable = false) )
     private List<Stop> stops;
 
     @ManyToMany
@@ -125,8 +137,12 @@ public class Route {
         this.driverList.add(driver);
     }
 
-    public void addTourGuide(TourGuideUser tourGuide){
+    public void addTourGuide(TourGuideUser tourGuide) {
         this.tourGuideList.add(tourGuide);
+    }
+
+    public int getStopCount(){
+        return (stops != null ) ? stops.size() : 0;
     }
 
 }

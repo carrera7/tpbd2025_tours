@@ -10,12 +10,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.DiscriminatorValue;
 
 @Entity
-@Table(name = "guias_turisticos")
+@DiscriminatorValue("GuiasTuristicos")
 public class TourGuideUser extends User {
 
-    @Id
+    
     @Column(name = "educacion")
     private String education;
 

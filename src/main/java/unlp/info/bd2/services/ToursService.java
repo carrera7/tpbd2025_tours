@@ -15,7 +15,7 @@ public interface ToursService {
     Optional<User> getUserByUsername(String username) throws ToursException;
     User updateUser(User user) throws ToursException;
     void deleteUser(User user) throws ToursException;
-    Stop createStop(String name, String description) throws ToursException;
+    Stop createStop(String name, String description);
     List<Stop> getStopByNameStart(String name);
     Route createRoute(String name, float price, float totalKm, int maxNumberOfUsers, List<Stop> stops) throws ToursException;
     Optional<Route> getRouteById(Long id);

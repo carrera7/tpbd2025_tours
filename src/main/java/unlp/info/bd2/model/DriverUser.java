@@ -7,18 +7,18 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.DiscriminatorValue;
+
 
 @Entity
-@Table(name = "Chofer")
+@DiscriminatorValue("Chofer")
 public class DriverUser extends User {
 
-    @Id 
     @Column(name = "expediente")
     private String expedient;
 
     @ManyToMany
-    @Column(name="ruta")
+    //@Column(name="ruta") si se necesita personalizar la relacion usar @jointable
     private List<Route> routes;
 
     public String getExpedient() {
