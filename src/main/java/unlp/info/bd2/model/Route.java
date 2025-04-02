@@ -17,24 +17,24 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "rutas")
+@Table(name = "routes")
 public class Route {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_ruta")
+    @Column(name = "id_route")
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "precio")
+    @Column(name = "price")
     private float price;
 
-    @Column(name = "km_totales")
+    @Column(name = "total_km")
     private float totalKm;
 
-    @Column(name = "numero_maximo_usuarios")
+    @Column(name = "max_number_users")
     private int maxNumberUsers;
 
     /*
@@ -53,7 +53,7 @@ public class Route {
 
     @ManyToMany(fetch = FetchType.EAGER )// ver el estandar por default, el persis solo permite guardado , pero como en los test genera las paradas y despues las rutas , se pueden scar todo tipo de cascade tyoe
     //no va ophanage removal porque sis e queire tneer paradas sueltas para aa futuro asociar a rutas
-    @JoinTable(name = "ruta_parada", joinColumns = @JoinColumn(name = "id_ruta", nullable = false), inverseJoinColumns = @JoinColumn(name = "id_paradas", nullable = false) )
+    @JoinTable(name = "route_stop", joinColumns = @JoinColumn(name = "id_route", nullable = false), inverseJoinColumns = @JoinColumn(name = "id_stop", nullable = false) )
     private List<Stop> stops;
 
     @ManyToMany
