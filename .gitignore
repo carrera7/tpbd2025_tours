@@ -20,3 +20,34 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+
+# Archivos de Maven
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+release.properties
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+
+# Archivos de test y reportes
+surefire-reports/
+failsafe-reports/
+test-output/
+
+# Configuración de Spring Boot (opcional, si usas archivos locales)
+application.properties
+application.yml
+application-dev.properties
+application-test.properties
+.env
