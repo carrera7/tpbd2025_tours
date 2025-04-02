@@ -16,12 +16,6 @@ import unlp.info.bd2.model.User;
 
 public class ToursRepositoryImpl implements ToursRepository{
 
-    private SessionFactory sessionFactory;
-
-    public ToursRepositoryImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
     @Override
     public List<Purchase> getAllPurchasesOfUsername(String username) {
         String hql = "FROM User u WHERE u.username = :username";
