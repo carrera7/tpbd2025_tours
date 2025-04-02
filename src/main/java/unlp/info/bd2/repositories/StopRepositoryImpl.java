@@ -23,4 +23,11 @@ public class StopRepositoryImpl implements StopRepository {
                                  .orElse(null);
         return Optional.ofNullable(stop);
     }
+
+    @Override
+    public Stop save(Stop stop) {
+        entityManager.persist(stop);        
+        
+        return stop; 
+    }
 }

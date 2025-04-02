@@ -35,15 +35,14 @@ public class Purchase {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
-    @Column(name="usuario")
     private User user;
 
     @OneToOne
-    @Column(name="ruta")
+    @JoinColumn(name = "id_route", referencedColumnName = "id_route")
     private Route route;
 
     @OneToOne
-    @Column(name="revision")
+    @JoinColumn(name = "revision_id", referencedColumnName = "revision_id")
     private Review review;
 
     @OneToMany

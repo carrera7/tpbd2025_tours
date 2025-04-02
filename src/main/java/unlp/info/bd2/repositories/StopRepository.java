@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface StopRepository {
     Optional<Stop> findByName(String name);
+    Stop save(Stop stop);
 }

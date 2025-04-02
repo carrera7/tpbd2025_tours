@@ -78,7 +78,9 @@ public class ToursServiceImpl implements ToursService{
     public Stop createStop(String name, String description) {
         //verifico que no exista una parada con el mismo nombre
         if (stopRepository.findByName(name).isPresent()) {
-            throw new ToursException("Ya existe una parada con ese nombre");
+            System.out.println("Ya existe una parada con ese nombre");
+            return null; 
+            // throw new ToursException("Ya existe una parada con ese nombre"); esto es necesario para el caso donde ya esta presente?ta presente?
         }
         //Crea y guardo la nueva parada
         Stop stop = new Stop(name, description);
