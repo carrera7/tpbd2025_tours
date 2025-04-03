@@ -76,21 +76,30 @@ public class ToursServiceImpl implements ToursService{
 
     @Override
     public Stop createStop(String name, String description) {
-        //verifico que no exista una parada con el mismo nombre
-        if (stopRepository.findByName(name).isPresent()) {
-            System.out.println("Ya existe una parada con ese nombre");
-            return null; 
-            // throw new ToursException("Ya existe una parada con ese nombre"); esto es necesario para el caso donde ya esta presente?ta presente?
+        // Validar los datos de entrada
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("El nombre de la parada no puede ser nulo o vacío");
         }
-        //Crea y guardo la nueva parada
+        if (description == null || description.isEmpty()) {
+            throw new IllegalArgumentException("La descripción de la parada no puede ser nula o vacía");
+        }
+
+        // Verificar si ya existe una parada con el mismo nombre
+        if (stopRepository.findByName(name).isPresent()) {
+            throw new ToursException("Ya existe una parada con ese nombre");
+        }
+        // Crear y guardar la nueva parada
         Stop stop = new Stop(name, description);
         return stopRepository.save(stop);
     }
+    
 
     @Override
     public List<Stop> getStopByNameStart(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStopByNameStart'");
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("El prefijo del nombre no puede ser nulo o vacío");
+        }
+        return stopRepository.findByNameStartingWith(name);
     }
 
     @Override

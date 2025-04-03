@@ -1,11 +1,13 @@
 package unlp.info.bd2.repositories;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
 import unlp.info.bd2.model.Stop;
-
-import java.util.Optional;
 
 @Repository
 public class StopRepositoryImpl implements StopRepository {
@@ -16,12 +18,10 @@ public class StopRepositoryImpl implements StopRepository {
     @Override
     public Optional<Stop> findByName(String name) {
         String query = "SELECT s FROM Stop s WHERE s.name = :name";
-        Stop stop = entityManager.createQuery(query, Stop.class)
-                                 .setParameter("name", name)
-                                 .getResultStream()
-                                 .findFirst()
-                                 .orElse(null);
-        return Optional.ofNullable(stop);
+        return entityManager.createQuery(query, Stop.class)
+                        .setParameter("name", name)
+                        .getResultStream()
+                        .findFirst();
     }
 
     @Override
@@ -29,5 +29,13 @@ public class StopRepositoryImpl implements StopRepository {
         entityManager.persist(stop);        
         
         return stop; 
+    }
+
+    @Override
+    public List<Stop> findByNameStartingWith(String prefix) {
+        String query = "SELECT s FROM Stop s WHERE s.name LIKE :prefix";
+        return entityManager.createQuery(query, Stop.class)
+                        .setParameter("prefix", prefix + "%")
+                        .getResultList();
     }
 }
