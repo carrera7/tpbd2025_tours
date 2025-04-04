@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 @Table(name = "revisiones")
 public class Review {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="revision_id")

@@ -1,5 +1,8 @@
 package unlp.info.bd2.repositories;
 import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import java.util.Date;
 import unlp.info.bd2.model.Purchase;
 import unlp.info.bd2.model.Route;
@@ -9,8 +12,10 @@ import unlp.info.bd2.model.Supplier;
 import unlp.info.bd2.model.TourGuideUser;
 import unlp.info.bd2.model.User;
 
+@Repository
 public interface ToursRepository {
 
+    void save(Object o);
     List<Purchase> getAllPurchasesOfUsername(String username);
     List<User> getUserSpendingMoreThan(float mount);
     List<Supplier> getTopNSuppliersInPurchases(int n);

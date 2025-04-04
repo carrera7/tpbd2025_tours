@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table (name = "stops")
 public class Stop {
+    
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)/*Deberia de ser auto o Identity? trabajamos con sql */ 

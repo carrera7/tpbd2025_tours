@@ -19,6 +19,9 @@ import jakarta.persistence.Table;
 @Table(name = "servicios")
 public class Service {
 
+    public Service(){
+
+    }
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "servicios_id")

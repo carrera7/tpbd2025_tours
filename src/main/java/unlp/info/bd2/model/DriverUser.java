@@ -14,6 +14,10 @@ import jakarta.persistence.DiscriminatorValue;
 @DiscriminatorValue("Chofer")
 public class DriverUser extends User {
 
+    public DriverUser(){
+        
+    }
+
     @Column(name = "expediente")
     private String expedient;
 

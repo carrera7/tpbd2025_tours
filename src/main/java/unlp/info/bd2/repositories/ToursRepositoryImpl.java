@@ -2,6 +2,11 @@ package unlp.info.bd2.repositories;
 
 import java.util.Date;
 import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jms.JmsProperties.Listener.Session;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
@@ -15,12 +20,16 @@ import unlp.info.bd2.model.User;
 
 public class ToursRepositoryImpl implements ToursRepository{
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private SessionFactory session;
+
+    public void save(Object o){
+        session.getCurrentSession().persist(o);
+    }
 
     @Override
     public List<Purchase> getAllPurchasesOfUsername(String username) {
-        return entityManager.createQuery(
+        return session.getCurrentSession().createQuery(
             "FROM User u WHERE u.username = :username", Purchase.class)
             .setParameter("username", username)
             .getResultList();

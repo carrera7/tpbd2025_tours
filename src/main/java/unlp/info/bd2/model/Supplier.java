@@ -18,6 +18,10 @@ import jakarta.persistence.Table;
 @Table(name = "proveedor")
 public class Supplier {
 
+    public Supplier(){
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "proveedor_id")

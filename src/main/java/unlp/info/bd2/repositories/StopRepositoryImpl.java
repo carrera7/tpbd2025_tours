@@ -7,7 +7,6 @@ import unlp.info.bd2.model.Stop;
 
 import java.util.Optional;
 
-@Repository
 public class StopRepositoryImpl implements StopRepository {
 
     @PersistenceContext

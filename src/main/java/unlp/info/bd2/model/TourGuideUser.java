@@ -16,7 +16,9 @@ import jakarta.persistence.DiscriminatorValue;
 @DiscriminatorValue("GuiasTuristicos")
 public class TourGuideUser extends User {
 
-    
+    public TourGuideUser(){
+
+    }
     @Column(name = "educacion")
     private String education;
 

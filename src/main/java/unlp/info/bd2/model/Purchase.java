@@ -18,6 +18,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "compras")
 public class Purchase {
+    public Purchase(){
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

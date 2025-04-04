@@ -22,6 +22,9 @@ import jakarta.persistence.DiscriminatorType;
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING) // Columna para diferenciar tipos de usuario
 public class User {
 
+    public User(){
+
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usuarios_id")
