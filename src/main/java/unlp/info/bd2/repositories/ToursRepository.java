@@ -11,6 +11,7 @@ import unlp.info.bd2.model.User;
 
 public interface ToursRepository {
 
+    void save(Object o);
     List<Purchase> getAllPurchasesOfUsername(String username);
     List<User> getUserSpendingMoreThan(float mount);
     List<Supplier> getTopNSuppliersInPurchases(int n);
@@ -24,10 +25,4 @@ public interface ToursRepository {
     Service getMostDemandedService();
     List<Service> getServiceNoAddedToPurchases();
     List<TourGuideUser> getTourGuidesWithRating1();
-
- // crud de hibernate, buscar en documentacion
-   // add
-    //delete 
-    //update
-  // no se implementa en ToursRepositoryImpl ??RUD
 }

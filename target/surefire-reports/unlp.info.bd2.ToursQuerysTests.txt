@@ -1,0 +1,108 @@
+-------------------------------------------------------------------------------
+Test set: unlp.info.bd2.ToursQuerysTests
+-------------------------------------------------------------------------------
+Tests run: 14, Failures: 0, Errors: 13, Skipped: 0, Time elapsed: 1.737 s <<< FAILURE! -- in unlp.info.bd2.ToursQuerysTests
+unlp.info.bd2.ToursQuerysTests.getRoutsNotSellTest -- Time elapsed: 0.327 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getRoutsNotSell'
+	at unlp.info.bd2.services.ToursServiceImpl.getRoutsNotSell(ToursServiceImpl.java:254)
+	at unlp.info.bd2.ToursQuerysTests.getRoutsNotSellTest(ToursQuerysTests.java:137)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getAllPurchasesOfUsernameTest -- Time elapsed: 0.003 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getAllPurchasesOfUsername'
+	at unlp.info.bd2.services.ToursServiceImpl.getAllPurchasesOfUsername(ToursServiceImpl.java:206)
+	at unlp.info.bd2.ToursQuerysTests.getAllPurchasesOfUsernameTest(ToursQuerysTests.java:56)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getRoutesWithStopTest -- Time elapsed: 0.003 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getStopByNameStart'
+	at unlp.info.bd2.services.ToursServiceImpl.getStopByNameStart(ToursServiceImpl.java:96)
+	at unlp.info.bd2.ToursQuerysTests.getRoutesWithStopTest(ToursQuerysTests.java:115)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getServiceNoAddedToPurchasesTest -- Time elapsed: 0.004 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getServiceNoAddedToPurchases'
+	at unlp.info.bd2.services.ToursServiceImpl.getServiceNoAddedToPurchases(ToursServiceImpl.java:272)
+	at unlp.info.bd2.ToursQuerysTests.getServiceNoAddedToPurchasesTest(ToursQuerysTests.java:158)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getMaxStopOfRoutesTest -- Time elapsed: 0.003 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getMaxStopOfRoutes'
+	at unlp.info.bd2.services.ToursServiceImpl.getMaxStopOfRoutes(ToursServiceImpl.java:248)
+	at unlp.info.bd2.ToursQuerysTests.getMaxStopOfRoutesTest(ToursQuerysTests.java:131)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getTop10MoreExpensivePurchasesInServicesTest -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getTop10MoreExpensivePurchasesInServices'
+	at unlp.info.bd2.services.ToursServiceImpl.getTop10MoreExpensivePurchasesInServices(ToursServiceImpl.java:224)
+	at unlp.info.bd2.ToursQuerysTests.getTop10MoreExpensivePurchasesInServicesTest(ToursQuerysTests.java:90)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getTopNSuppliersInPurchasesTest -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getTopNSuppliersInPurchases'
+	at unlp.info.bd2.services.ToursServiceImpl.getTopNSuppliersInPurchases(ToursServiceImpl.java:218)
+	at unlp.info.bd2.ToursQuerysTests.getTopNSuppliersInPurchasesTest(ToursQuerysTests.java:80)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getTop5UsersMorePurchasesTest -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getTop5UsersMorePurchases'
+	at unlp.info.bd2.services.ToursServiceImpl.getTop5UsersMorePurchases(ToursServiceImpl.java:230)
+	at unlp.info.bd2.ToursQuerysTests.getTop5UsersMorePurchasesTest(ToursQuerysTests.java:97)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getUserSpendingMoreThanTest -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getUserSpendingMoreThan'
+	at unlp.info.bd2.services.ToursServiceImpl.getUserSpendingMoreThan(ToursServiceImpl.java:212)
+	at unlp.info.bd2.ToursQuerysTests.getUserSpendingMoreThanTest(ToursQuerysTests.java:68)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getMostDemandedServiceTest -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getMostDemandedService'
+	at unlp.info.bd2.services.ToursServiceImpl.getMostDemandedService(ToursServiceImpl.java:266)
+	at unlp.info.bd2.ToursQuerysTests.getMostDemandedServiceTest(ToursQuerysTests.java:151)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getTourGuidesWithRating1Test -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getTourGuidesWithRating1'
+	at unlp.info.bd2.services.ToursServiceImpl.getTourGuidesWithRating1(ToursServiceImpl.java:278)
+	at unlp.info.bd2.ToursQuerysTests.getTourGuidesWithRating1Test(ToursQuerysTests.java:165)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getTop3RoutesWithMaxRatingTest -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getTop3RoutesWithMaxRating'
+	at unlp.info.bd2.services.ToursServiceImpl.getTop3RoutesWithMaxRating(ToursServiceImpl.java:260)
+	at unlp.info.bd2.ToursQuerysTests.getTop3RoutesWithMaxRatingTest(ToursQuerysTests.java:144)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+unlp.info.bd2.ToursQuerysTests.getCountOfPurchasesBetweenDatesTest -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'getCountOfPurchasesBetweenDates'
+	at unlp.info.bd2.services.ToursServiceImpl.getCountOfPurchasesBetweenDates(ToursServiceImpl.java:236)
+	at unlp.info.bd2.ToursQuerysTests.getCountOfPurchasesBetweenDatesTest(ToursQuerysTests.java:105)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+

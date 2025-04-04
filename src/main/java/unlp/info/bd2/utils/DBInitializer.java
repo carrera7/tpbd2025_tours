@@ -17,6 +17,7 @@ public class DBInitializer {
 
     @Transactional
     public void prepareDB() throws ToursException {
+        /** 
         Calendar cal1 = Calendar.getInstance();
         cal1.set(1980, Calendar.APRIL, 5);
         Date dob1 = cal1.getTime();
@@ -179,5 +180,6 @@ public class DBInitializer {
         Review review14 = this.toursService.addReviewToPurchase(3, "Me encantó el tour, pero el guía no era ductil con el portugués.", purchase16);
         Review review15 = this.toursService.addReviewToPurchase(3, "Estuvo bien, aunque esperaba más.", purchase17);
         Review review16 = this.toursService.addReviewToPurchase(1, "Muy caro para lo que se brinda.", purchase18);
+      */
     }
 }

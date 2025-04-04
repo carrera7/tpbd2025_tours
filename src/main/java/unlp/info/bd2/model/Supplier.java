@@ -2,35 +2,14 @@ package unlp.info.bd2.model;
 
 import java.util.List;
 
-/**import jakarta.annotation.Generated;
-import jakarta.persistence.CascadeType;**/
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-/**import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;**/
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "proveedor")
 public class Supplier {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "proveedor_id")
     private Long id;
 
-    @Column(name = "nombre_de_negocio")
     private String businessName;
 
-    @Column(name = "numero_authenticacion")
     private String authorizationNumber;
 
-    @OneToMany
-    @Column(name="servicio")
     private List<Service> services;
 
     public Long getId() {

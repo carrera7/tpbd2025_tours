@@ -1,40 +1,27 @@
 package unlp.info.bd2.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-/**import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;**/
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
-@Entity
-@Table (name = "paradas")
+@Entity(name = "Stop")
 public class Stop {
 
+    public Stop(){
+        
+    }
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "paradas_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // si es autoincremental en la DB
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "descripcion")
+    @Column(name = "description",columnDefinition = "TEXT") // o ajustá según el tipo real
     private String description;
-
-    /*
-     * modificacion a @OneToMany
-     * @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
-     * @JoinColumn(name = "route_id")
-     * private List<Stop> stops;
-     */
-
-    @OneToMany(mappedBy = "stop", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Route route;
 
 
     public Long getId() {

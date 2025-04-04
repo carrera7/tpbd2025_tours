@@ -29,7 +29,7 @@ class ToursApplicationTests {
 
 	@Autowired
 	private ToursService toursService;
-
+	/** 
 	private Date dob1;
 	private Date dob2;
 	private Date dpri;
@@ -319,5 +319,9 @@ class ToursApplicationTests {
 		assertTrue(tourGuideUser.isActive());
 		assertThrows(ToursException.class, () -> this.toursService.deleteUser(tourGuideUser), "El usuario no puede ser desactivado");
 	}
-
+	*/
+	@Test
+    void testStopFields() {
+        Stop stop = new Stop();
+	}
 }

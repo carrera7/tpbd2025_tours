@@ -3,6 +3,13 @@ package unlp.info.bd2.repositories;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jms.JmsProperties.Listener.Session;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 import unlp.info.bd2.model.Purchase;
 import unlp.info.bd2.model.Route;
 import unlp.info.bd2.model.Service;
@@ -13,10 +20,19 @@ import unlp.info.bd2.model.User;
 
 public class ToursRepositoryImpl implements ToursRepository{
 
+    @Autowired
+    private SessionFactory session;
+
+    public void save(Object o){
+        session.getCurrentSession().persist(o);
+    }
+
     @Override
     public List<Purchase> getAllPurchasesOfUsername(String username) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllPurchasesOfUsername'");
+        return session.getCurrentSession().createQuery(
+            "FROM User u WHERE u.username = :username", Purchase.class)
+            .setParameter("username", username)
+            .getResultList();
     }
 
     @Override
@@ -90,6 +106,4 @@ public class ToursRepositoryImpl implements ToursRepository{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTourGuidesWithRating1'");
     }
-    
-
 }
