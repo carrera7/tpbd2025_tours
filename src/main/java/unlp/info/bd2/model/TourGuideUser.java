@@ -20,7 +20,7 @@ public class TourGuideUser extends User {
     private String education;
 
     @ManyToMany(mappedBy = "tourGuideList")
-    private List<Route> routes = new ArrayList<>();;
+    private List<Route> routes;
 
 
     public String getEducation() {
@@ -39,4 +39,11 @@ public class TourGuideUser extends User {
         this.routes = routes;
     }
 
+    //agrego metodos
+    public TourGuideUser(String username, String password, String fullName, String email,
+                         Date birthdate, String phoneNumber, String education) {
+        super(username, password, fullName, email, birthdate, phoneNumber);
+        this.setEducation(education);
+        this.routes = new ArrayList<>();
+    }
 }

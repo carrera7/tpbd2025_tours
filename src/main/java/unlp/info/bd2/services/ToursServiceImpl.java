@@ -6,6 +6,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import unlp.info.bd2.model.DriverUser;
 import unlp.info.bd2.model.ItemService;
 import unlp.info.bd2.model.Purchase;
@@ -23,6 +26,9 @@ import unlp.info.bd2.utils.ToursException;
 @org.springframework.stereotype.Service
 public class ToursServiceImpl implements ToursService{
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     private ToursRepository tourRepository;
 
     public ToursServiceImpl(ToursRepository repository){
@@ -31,29 +37,43 @@ public class ToursServiceImpl implements ToursService{
 
     @Override
     public User createUser(String username, String password, String fullName, String email, Date birthdate,
-            String phoneNumber) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createUser'");
+        String phoneNumber) throws ToursException {
+        try {
+            return new User(username, password, fullName, email, birthdate, phoneNumber);
+        } catch (Exception e) {
+            throw new ToursException("Error al instanciar User" + e);
+        }
     }
 
     @Override
     public DriverUser createDriverUser(String username, String password, String fullName, String email, Date birthdate,
-            String phoneNumber, String expedient) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createDriverUser'");
-    }
+            String phoneNumber, String expedient)throws ToursException {
+            try {    
+                return new DriverUser(username,password,fullName,email,birthdate,phoneNumber,expedient);
+            } catch(Exception e){
+                throw new ToursException("Error al intanciar DriverUser" + e);
+            }       
+        }
 
     @Override
     public TourGuideUser createTourGuideUser(String username, String password, String fullName, String email,
             Date birthdate, String phoneNumber, String education) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createTourGuideUser'");
+            try {    
+                return new TourGuideUser(username,password,fullName,email,birthdate,phoneNumber,education);
+            } catch (Exception e){
+                throw new ToursException("Error al intanciar TourGuideUser"+e);
+            }
     }
 
     @Override
+    @Transactional
     public Optional<User> getUserById(Long id) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserById'");
+        try {
+            User user = entityManager.find(User.class, id); // Hibernate resolverá si es DriverUser o TourGuideUser
+            return Optional.ofNullable(user);
+        } catch (Exception e) {
+            throw new ToursException("Error al obtener el usuario con ID: " + id);
+        }
     }
 
     @Override

@@ -32,10 +32,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Transactional
 @Rollback(true)
 public class ToursQuerysTests {
-    /** 
+    
     @Autowired
     DBInitializer initializer;
-
+    /** 
     @Autowired
     ToursService service;
 

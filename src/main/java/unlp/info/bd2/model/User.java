@@ -42,7 +42,7 @@ public class User {
     private boolean active;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Purchase> purchaseList = new ArrayList<>();;
+    private List<Purchase> purchaseList;
 
 
     public Long getId() {
@@ -116,4 +116,17 @@ public class User {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    //agrego metodos
+    public User(String username, String password, String fullName, String email, Date birthdate, String phoneNumber) {
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setName(name);
+        this.setEmail(email);
+        this.setBirthdate(birthdate);
+        this.setPhoneNumber(phoneNumber);
+        this.active = true; // Por defecto lo seteamos como activo
+        this.purchaseList = new ArrayList<>();
+    }
+    
 }
