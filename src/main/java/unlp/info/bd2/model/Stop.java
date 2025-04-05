@@ -4,7 +4,7 @@ package unlp.info.bd2.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Stop")
+@Table(name = "stop")
 public class Stop {
 
     public Stop(){

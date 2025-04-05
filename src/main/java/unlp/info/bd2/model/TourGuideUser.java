@@ -5,11 +5,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.*;
+
+@Entity
+@DiscriminatorValue("TOUR_GUIDE")
 public class TourGuideUser extends User {
 
+    public TourGuideUser(){
+
+    }
+
+
+    @Column(name = "education", length = 255)
     private String education;
 
-    private List<Route> routes;
+    @ManyToMany(mappedBy = "tourGuideList")
+    private List<Route> routes = new ArrayList<>();;
 
 
     public String getEducation() {

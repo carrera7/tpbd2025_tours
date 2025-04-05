@@ -2,25 +2,47 @@ package unlp.info.bd2.model;
 
 import java.util.Date;
 import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "purchase")
 public class Purchase {
 
-    Long id;
+    public Purchase(){
 
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "code", length = 255, nullable = false, unique = true)
     private String code;
 
+    @Column(name = "total_price")
     private float totalPrice;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date", nullable = false)
     private Date date;
 
+    // Relación con User
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
+    // Relación con Route
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
+    // Relación uno a uno con Review (opcional)
+    @OneToOne(mappedBy = "purchase", cascade = CascadeType.ALL,orphanRemoval = true)
     private Review review;
 
+    // Relación con ItemService
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemService> itemServiceList;
-
 
 
     public Long getId() {
@@ -79,6 +101,7 @@ public class Purchase {
         this.review = review;
     }
 
+    
     public List<ItemService> getItemServiceList() {
         return itemServiceList;
     }

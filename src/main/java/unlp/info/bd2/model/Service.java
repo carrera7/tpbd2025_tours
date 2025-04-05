@@ -7,7 +7,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Service")
+@Table(name = "service")
 public class Service {
     
     public Service(){
@@ -15,22 +15,23 @@ public class Service {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // si es autoincremental en la DB
     private Long id;
     
-    @Column(name="name",length = 155)
+    @Column(name="name",length = 100)
     private String name;
 
     @Column(name="price")
     private float price;
 
-    @Column(name="description",length = 255)
+    @Column(name="description",columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemService> itemServiceList;
+    private List<ItemService> itemServiceList = new ArrayList<>();;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id") // Esta será la columna FK en la tabla "Service"
+    @JoinColumn(name = "supplier_id",nullable = false) // Esta será la columna FK en la tabla "Service"
     private Supplier supplier;
 
 

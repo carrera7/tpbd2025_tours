@@ -4,25 +4,45 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class User {
 
+    public User(){
+        
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
+    @Column(name = "username", length = 100, unique = true, nullable = false)
     private String username;
 
+    @Column(name = "password", length = 100, nullable = false)
     private String password;
 
+    @Column(name = "name", length = 100)
     private String name;
 
+    @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "birthdate")
     private Date birthdate;
 
+    @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
+    @Column(name = "active", nullable = false)
     private boolean active;
 
-    private List<Purchase> purchaseList;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Purchase> purchaseList = new ArrayList<>();;
 
 
     public Long getId() {

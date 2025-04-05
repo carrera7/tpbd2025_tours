@@ -1,13 +1,23 @@
 package unlp.info.bd2.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.*;
+
+@Entity
+@DiscriminatorValue("DRIVER") // Solo si estás usando herencia con SINGLE_TABLE
 public class DriverUser extends User {
 
+    public DriverUser(){    
+    }
+
+    @Column(name = "expedient", length = 100, nullable = false, unique = true)
     private String expedient;
 
-    private List<Route> routes;
+    @ManyToMany(mappedBy = "driverList")
+    private List<Route> routes = new ArrayList<>();;
 
     public String getExpedient() {
         return expedient;
