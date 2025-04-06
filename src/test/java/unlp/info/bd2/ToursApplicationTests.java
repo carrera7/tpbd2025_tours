@@ -19,7 +19,6 @@ import unlp.info.bd2.config.HibernateConfiguration;
 import unlp.info.bd2.model.*;
 import unlp.info.bd2.services.ToursService;
 import unlp.info.bd2.utils.ToursException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -131,17 +130,17 @@ class ToursApplicationTests {
 
 		List<Stop> stops1 = new ArrayList<Stop>(Arrays.asList(stop1, stop2, stop3));
 		List<Stop> stops2 = new ArrayList<Stop>(Arrays.asList(stop3, stop2));
-	}
-	/* 
+	
 	
 		Route route1 = this.toursService.createRoute("Estadios", 20000, 55.5f, 3, stops1);
-		assertNotNull(route1.getId());
+		assertNotNull(route1.getId()); 
 
 		Optional<Route> opRoute1 = this.toursService.getRouteById(route1.getId());
 		assertTrue(opRoute1.isPresent());
 		Route route3 = opRoute1.get();
 		assertEquals("Estadios", route3.getName());
 		assertEquals(3, route3.getStops().size());
+		
 
 		Route route2 = this.toursService.createRoute("Estadios 2", 15000, 30f, 2, stops2);
 		List<Route> listRoutes1 = this.toursService.getRoutesBelowPrice(50000f);
@@ -152,6 +151,7 @@ class ToursApplicationTests {
 		assertEquals("Estadios 2", routeFromList.getName());
 	}
 
+	/* 
 	@Test
 	void assignWorkersToRoutesTest() throws ToursException {
 		Stop stop1 = this.toursService.createStop("Estadio Monumental", "Estadio de River Plate");
@@ -334,7 +334,6 @@ class ToursApplicationTests {
 	@Test
     void testStopFields() {
         Stop stop = new Stop();
-		Service service = new Service();
 	}
 	
 }

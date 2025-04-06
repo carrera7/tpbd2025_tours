@@ -1,12 +1,8 @@
 package unlp.info.bd2.model;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="stops")
@@ -26,11 +22,9 @@ public class Stop {
     @Column(name = "description",columnDefinition = "TEXT") // o ajustá según el tipo real
     private String description;
 
-    public Stop(String name, String description) {
-        this.setName(name);
-        this.setDescription(description);
-    }
 
+    @ManyToMany(mappedBy = "stops", fetch = FetchType.LAZY) 
+    private List<Route> routes = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -55,4 +49,19 @@ public class Stop {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
+    }
+
+      public Stop(String name, String description) {
+        this.setName(name);
+        this.setDescription(description);
+        this.routes= new ArrayList<>();
+    }
+
 }

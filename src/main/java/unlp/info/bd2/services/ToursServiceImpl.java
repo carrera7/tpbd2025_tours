@@ -153,26 +153,24 @@ public class ToursServiceImpl implements ToursService{
     }
 
     @Override
-    @Transactional
     public Route createRoute(String name, float price, float totalKm, int maxNumberOfUsers, List<Stop> stops)
             throws ToursException {
+        if (name == null || name.isEmpty()) {
+        throw new ToursException("El nombre no puede estar vacío");
+        }
+
         try {
             Route route = new Route(name, price, totalKm, maxNumberOfUsers, stops);
-            route.setStops(stops); // Establecemos explícitamente las paradas
-            entityManager.persist(route);
-            return route;
+            route.setStops(stops); // si no lo hace el constructor
+            return tourRepository.save(route);
         } catch (Exception e) {
             throw new ToursException("Error al crear la ruta: " + e.getMessage());
         }
     }
 
     @Override
-    public Optional<Route> getRouteById(Long id) {
-        /**
-         * Si no se encuentra, devuelve null, por eso lo envolvemos con Optional.ofNullable(...).
-         */
-        Route route = entityManager.find(Route.class, id);
-        return Optional.ofNullable(route);
+    public Optional<Route> getRouteById(Long id)  {
+        return tourRepository.getRouteById(id);
     }
 
     /**
@@ -180,12 +178,8 @@ public class ToursServiceImpl implements ToursService{
      */
 
     @Override
-    public List<Route> getRoutesBelowPrice(float price) {
-        TypedQuery<Route> query = entityManager.createQuery(
-            "SELECT r FROM Route r WHERE r.price < :price", Route.class);
-        query.setParameter("price", price);
-    
-        return query.getResultList();
+    public List<Route> getRoutesBelowPrice(float price){
+        return tourRepository.findRoutesBelowPrice(price);
     }
     
     /**

@@ -28,5 +28,7 @@ public interface ToursRepository {
     List<Service> getServiceNoAddedToPurchases();
     List<TourGuideUser> getTourGuidesWithRating1();
     Optional<Stop> findStopByName(String name);
+    Optional<Route> getRouteById(Long id);
     List<Stop> findStopByNameStartingWith(String prefix);
+    List<Route> findRoutesBelowPrice(float price);
 }

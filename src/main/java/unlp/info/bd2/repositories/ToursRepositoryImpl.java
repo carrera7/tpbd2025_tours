@@ -24,9 +24,12 @@ public class ToursRepositoryImpl implements ToursRepository{
     @Autowired
     private SessionFactory session;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Override
-    public <T> T save(T o){
-        session.getCurrentSession().persist(o);
+    public <T> T save(T o) {
+        entityManager.persist(o);
         return o;
     }
 
@@ -112,12 +115,12 @@ public class ToursRepositoryImpl implements ToursRepository{
 
     @Override
     public Optional<Stop> findStopByName(String name) {
-        return session.getCurrentSession().createQuery(
-            "FROM Stop s WHERE s.name = :name", Stop.class)
+        List<Stop> results = entityManager
+            .createQuery("FROM Stop s WHERE s.name = :name", Stop.class)
             .setParameter("name", name)
-            .getResultList()
-            .stream()
-            .findFirst();
+            .getResultList();
+
+        return results.stream().findFirst();
     }
 
     @Override
@@ -127,4 +130,19 @@ public class ToursRepositoryImpl implements ToursRepository{
             .setParameter("prefix", prefix + "%")
             .getResultList();
     }
+
+    @Override
+    public Optional<Route> getRouteById(Long id) {
+        Route route = entityManager.find(Route.class, id);
+        return Optional.ofNullable(route);
+    }
+
+    @Override
+    public List<Route> findRoutesBelowPrice(float price) {
+        return entityManager.createQuery(
+                "FROM Route r WHERE r.price < :price", Route.class)
+            .setParameter("price", price)
+            .getResultList();
+    }
+
 }

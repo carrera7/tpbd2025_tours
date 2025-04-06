@@ -6,7 +6,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "route")
+@Table(name = "routes")
 public class Route {
 
     public Route(){
@@ -45,7 +45,7 @@ public class Route {
     )
     private List<DriverUser> driverList = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY) // o EAGER si realmente se usa siempre
+    @ManyToMany(fetch = FetchType.LAZY, cascade ={CascadeType.PERSIST, CascadeType.MERGE}) // o EAGER si realmente se usa siempre, consultar el cascade type si tiene sentido , maas que nada el merge 
     @JoinTable(
         name = "route_tour_guide",
         joinColumns = @JoinColumn(name = "route_id"),
@@ -58,7 +58,7 @@ public class Route {
        this.setPrice(price);
        this.setTotalKm(totalKm);
        this.setMaxNumberUsers(maxNumberOfUsers);
-       this.stops = new ArrayList<>(); 
+       this.setStops(stops); 
     }
 
     public Long getId() {
