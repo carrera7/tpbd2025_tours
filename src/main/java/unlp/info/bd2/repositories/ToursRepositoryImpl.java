@@ -145,4 +145,18 @@ public class ToursRepositoryImpl implements ToursRepository{
             .getResultList();
     }
 
+    @Override
+    public List<Route> findRoutesWithStop(Stop stop) {
+        String jpql = """
+            SELECT r
+            FROM Route r
+            JOIN r.stops s
+            WHERE s = :stop
+        """;
+    
+        return entityManager.createQuery(jpql, Route.class)
+                            .setParameter("stop", stop)
+                            .getResultList();
+    }
+
 }

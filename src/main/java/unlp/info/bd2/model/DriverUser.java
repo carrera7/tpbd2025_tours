@@ -2,10 +2,13 @@ package unlp.info.bd2.model;
 
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 @DiscriminatorValue("DRIVER") // Solo si estás usando herencia con SINGLE_TABLE
@@ -14,7 +17,7 @@ public class DriverUser extends User {
     public DriverUser(){    
     }
 
-    @Column(name = "expedient", length = 100, nullable = false, unique = true)
+    @Column(name = "expedient", length = 100, nullable = false, columnDefinition = "VARCHAR(100) DEFAULT 'SIN_EXPEDIENTE'" )
     private String expedient;
 
     @ManyToMany(mappedBy = "driverList")
@@ -24,9 +27,9 @@ public class DriverUser extends User {
         return expedient;
     }
 
-    public void setExpedient(String expedient) {
+   public void setExpedient(String expedient) {
         this.expedient = expedient;
-    }
+   }
 
     public List<Route> getRoutes() {
         return routes;

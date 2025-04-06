@@ -31,4 +31,5 @@ public interface ToursRepository {
     Optional<Route> getRouteById(Long id);
     List<Stop> findStopByNameStartingWith(String prefix);
     List<Route> findRoutesBelowPrice(float price);
+    List<Route> findRoutesWithStop(Stop stop);
 }

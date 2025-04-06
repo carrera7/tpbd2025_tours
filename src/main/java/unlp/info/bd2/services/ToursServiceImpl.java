@@ -613,19 +613,19 @@ public class ToursServiceImpl implements ToursService{
      * debe devolver la cantidad máxima de paradas (Stop) que tiene alguna ruta (Route).
      */
     @Override
-    public Long getMaxStopOfRoutes() {
+    public Integer getMaxStopOfRoutes() {
         String jpql = """
             SELECT MAX(SIZE(r.stops))
             FROM Route r
         """;
     
-        return entityManager.createQuery(jpql, Long.class)
+        return entityManager.createQuery(jpql, Integer.class)
                             .getSingleResult();
     }
     
     /**
      * debe devolver una lista de todas las rutas (Route) que nunca fueron vendidas, 
-     * es decir, que no tienen ninguna compra (Purchase) asociada.
+     * es decir, que no tienen ninguna compra (PurchasIntegere) asociada.
      */
     @Override
     public List<Route> getRoutsNotSell() {

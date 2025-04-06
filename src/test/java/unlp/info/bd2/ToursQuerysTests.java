@@ -1,8 +1,11 @@
 package unlp.info.bd2;
 
-import java.text.SimpleDateFormat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Assert;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -15,19 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import unlp.info.bd2.config.AppConfig;
 import unlp.info.bd2.config.HibernateConfiguration;
-import unlp.info.bd2.model.*;
+import unlp.info.bd2.model.Route;
+import unlp.info.bd2.model.Stop;
 import unlp.info.bd2.services.ToursService;
 import unlp.info.bd2.utils.DBInitializer;
 import unlp.info.bd2.utils.ToursException;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 
 @SpringBootTest
@@ -118,25 +116,27 @@ public class ToursQuerysTests {
     @Test
     void getRoutesWithStopTest() throws ToursException {
         Stop stop1 = this.service.getStopByNameStart("Diagonal Norte").get(0);
-        // Stop stop2 = this.service.getStopByNameStart("Teatro Colón").get(0);
-        // Stop stop3 = this.service.getStopByNameStart("La Boca").get(0);
+        Stop stop2 = this.service.getStopByNameStart("Teatro Colón").get(0);
+        Stop stop3 = this.service.getStopByNameStart("La Boca").get(0);
 
-        // List<Route> routes1 = this.service.getRoutesWithStop(stop1);
-        // assertEquals(2, routes1.size());
-        // this.assertListEquality(routes1.stream().map(Route::getName).collect(Collectors.toList()), List.of("City Tour", "Ruta vacia"));
-        // List<Route> routes2 = this.service.getRoutesWithStop(stop2);
-        // assertEquals(2, routes2.size());
-        // this.assertListEquality(routes2.stream().map(Route::getName).collect(Collectors.toList()), List.of("Historical Adventure", "Architectural Expedition"));
-        // List<Route> routes3 = this.service.getRoutesWithStop(stop3);
-        // assertEquals(0, routes3.size());
+        List<Route> routes1 = this.service.getRoutesWithStop(stop1);
+        assertEquals(2, routes1.size());
+        assertEquals(routes1.stream().map(Route::getName).collect(Collectors.toList()), List.of("City Tour", "Ruta vacia"));
+        //this.assertListEquality(routes1.stream().map(Route::getName).collect(Collectors.toList()), List.of("City Tour", "Ruta vacia"));
+        List<Route> routes2 = this.service.getRoutesWithStop(stop2);
+        assertEquals(2, routes2.size());
+        assertEquals(routes2.stream().map(Route::getName).collect(Collectors.toList()), List.of("Historical Adventure", "Architectural Expedition"));
+        List<Route> routes3 = this.service.getRoutesWithStop(stop3);
+        assertEquals(0, routes3.size());
+    }
+
+
+    @Test
+    void getMaxStopOfRoutesTest() throws ToursException {
+        Integer maxStopOfRoutes = this.service.getMaxStopOfRoutes();
+        assertEquals(9, maxStopOfRoutes);
     }
 }
-
-//     @Test
-//     void getMaxStopOfRoutesTest() throws ToursException {
-//         Long maxStopOfRoutes = this.service.getMaxStopOfRoutes();
-//         assertEquals(9, maxStopOfRoutes);
-//     }
 
 //     @Test
 //     void getRoutsNotSellTest() throws ToursException {
