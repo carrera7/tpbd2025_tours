@@ -23,113 +23,126 @@ public class ToursRepositoryImpl implements ToursRepository{
 
     @Autowired
     private SessionFactory session;
+
+    @PersistenceContext
     private EntityManager entityManager;
-    
-        public void save(Object o){
-            session.getCurrentSession().persist(o);
-        }
-    
-        @Override
-        public List<Purchase> getAllPurchasesOfUsername(String username) {
-            return session.getCurrentSession().createQuery(
-                "FROM User u WHERE u.username = :username", Purchase.class)
-                .setParameter("username", username)
-                .getResultList();
-        }
-    
-        @Override
-        public List<User> getUserSpendingMoreThan(float mount) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getUserSpendingMoreThan'");
-        }
-    
-        @Override
-        public List<Supplier> getTopNSuppliersInPurchases(int n) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getTopNSuppliersInPurchases'");
-        }
-    
-        @Override
-        public List<Purchase> getTop10MoreExpensivePurchasesInServices() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getTop10MoreExpensivePurchasesInServices'");
-        }
-    
-        @Override
-        public List<User> getTop5UsersMorePurchases() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getTop5UsersMorePurchases'");
-        }
-    
-        @Override
-        public long getCountOfPurchasesBetweenDates(Date start, Date end) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getCountOfPurchasesBetweenDates'");
-        }
-    
-        @Override
-        public List<Route> getRoutesWithStop(Stop stop) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getRoutesWithStop'");
-        }
-    
-        @Override
-        public Long getMaxStopOfRoutes() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getMaxStopOfRoutes'");
-        }
-    
-        @Override
-        public List<Route> getRoutsNotSell() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getRoutsNotSell'");
-        }
-    
-        @Override
-        public List<Route> getTop3RoutesWithMaxRating() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getTop3RoutesWithMaxRating'");
-        }
-    
-        @Override
-        public Service getMostDemandedService() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getMostDemandedService'");
-        }
-    
-        @Override
-        public List<Service> getServiceNoAddedToPurchases() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getServiceNoAddedToPurchases'");
-        }
-    
-        @Override
-        public List<TourGuideUser> getTourGuidesWithRating1() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getTourGuidesWithRating1'");
-        }
-    
-        @Override
-        public Optional<User> findByUsername(String username) {
-                String hql = "FROM User u WHERE u.username = :username";
-                User user = session.getCurrentSession().createQuery(hql, User.class)
-                                   .setParameter("username", username)
-                                   .uniqueResult();
-                return Optional.ofNullable(user);
-        }
-    
-        @Override
-        public Optional<User> findById(Long Id) {
-            String query = "SELECT * FROM users WHERE id = :id";
-            User user = (User) entityManager.createNativeQuery(query, User.class)
-                                        .setParameter("id", Id)
-                                        .getSingleResult();
-        return Optional.ofNullable(user);
-        }
-    
-        @Override // preguntar si esta bien el remove
-        public void delete(Object o) {
-            session.getCurrentSession().remove(o);
-        }
-    
+
+    @Override
+    public <T> T save(T o) {
+        entityManager.persist(o);
+        return o;
+    }
+
+    @Override
+    public List<Purchase> getAllPurchasesOfUsername(String username) {
+        return session.getCurrentSession().createQuery(
+            "FROM User u WHERE u.username = :username", Purchase.class)
+            .setParameter("username", username)
+            .getResultList();
+    }
+
+    @Override
+    public List<User> getUserSpendingMoreThan(float mount) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUserSpendingMoreThan'");
+    }
+
+    @Override
+    public List<Supplier> getTopNSuppliersInPurchases(int n) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTopNSuppliersInPurchases'");
+    }
+
+    @Override
+    public List<Purchase> getTop10MoreExpensivePurchasesInServices() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTop10MoreExpensivePurchasesInServices'");
+    }
+
+    @Override
+    public List<User> getTop5UsersMorePurchases() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTop5UsersMorePurchases'");
+    }
+
+    @Override
+    public long getCountOfPurchasesBetweenDates(Date start, Date end) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCountOfPurchasesBetweenDates'");
+    }
+
+    @Override
+    public List<Route> getRoutesWithStop(Stop stop) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRoutesWithStop'");
+    }
+
+    @Override
+    public Long getMaxStopOfRoutes() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMaxStopOfRoutes'");
+    }
+
+    @Override
+    public List<Route> getRoutsNotSell() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRoutsNotSell'");
+    }
+
+    @Override
+    public List<Route> getTop3RoutesWithMaxRating() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTop3RoutesWithMaxRating'");
+    }
+
+    @Override
+    public Service getMostDemandedService() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMostDemandedService'");
+    }
+
+    @Override
+    public List<Service> getServiceNoAddedToPurchases() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getServiceNoAddedToPurchases'");
+    }
+
+    @Override
+    public List<TourGuideUser> getTourGuidesWithRating1() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTourGuidesWithRating1'");
+    }
+
+    @Override
+    public Optional<Stop> findStopByName(String name) {
+        List<Stop> results = entityManager
+            .createQuery("FROM Stop s WHERE s.name = :name", Stop.class)
+            .setParameter("name", name)
+            .getResultList();
+
+        return results.stream().findFirst();
+    }
+
+    @Override
+    public List<Stop> findStopByNameStartingWith(String prefix) {
+        String query =  "FROM Stop s WHERE s.name LIKE :prefix";
+        return session.getCurrentSession().createQuery(query, Stop.class)
+            .setParameter("prefix", prefix + "%")
+            .getResultList();
+    }
+
+    @Override
+    public Optional<Route> getRouteById(Long id) {
+        Route route = entityManager.find(Route.class, id);
+        return Optional.ofNullable(route);
+    }
+
+    @Override
+    public List<Route> findRoutesBelowPrice(float price) {
+        return entityManager.createQuery(
+                "FROM Route r WHERE r.price < :price", Route.class)
+            .setParameter("price", price)
+            .getResultList();
+    }
+
 }
