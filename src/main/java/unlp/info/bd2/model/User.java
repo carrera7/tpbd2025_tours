@@ -4,49 +4,44 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "usuarios")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class User {
 
+    public User(){
+        
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "usuarios_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
-    @Column(name = "nombre_usuario")
+    @Column(name = "username", length = 100, unique = true, nullable = false)
     private String username;
 
-    @Column(name = "contraseña")
+    @Column(name = "password", length = 100, nullable = false)
     private String password;
 
-    @Column(name = "nombre")
+    @Column(name = "name", length = 100)
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
-    @Column(name = "fecha_de_naciemiento")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "birthdate")
     private Date birthdate;
 
-    @Column(name = "numero_de_telefono")
+    @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
-    @Column(name = "activo")
+    @Column(name = "active", nullable = false)
     private boolean active;
 
-    @OneToMany
-    @Column(name = "lista_compras")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Purchase> purchaseList;
 
 
@@ -121,4 +116,17 @@ public class User {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    //agrego metodos
+    public User(String username, String password, String fullName, String email, Date birthdate, String phoneNumber) {
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setName(name);
+        this.setEmail(email);
+        this.setBirthdate(birthdate);
+        this.setPhoneNumber(phoneNumber);
+        this.active = true; // Por defecto lo seteamos como activo
+        this.purchaseList = new ArrayList<>();
+    }
+    
 }

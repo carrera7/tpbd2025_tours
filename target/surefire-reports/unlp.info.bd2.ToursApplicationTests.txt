@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 Test set: unlp.info.bd2.ToursApplicationTests
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 11, Failures: 0, Errors: 11, Skipped: 0, Time elapsed: 5.328 s <<< FAILURE! -- in unlp.info.bd2.ToursApplicationTests
 unlp.info.bd2.ToursApplicationTests.addReviewToPurchaseTest -- Time elapsed: 0.061 s <<< ERROR!
 java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@5d7399f9 testClass = unlp.info.bd2.ToursApplicationTests, locations = [], classes = [unlp.info.bd2.config.HibernateConfiguration, unlp.info.bd2.config.AppConfig], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@46cdf8bd, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@644baf4a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@17f62e33, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7f485fda, org.springframework.boot.test.context.SpringBootTestAnnotation@7c8f9b8], contextLoader = org.springframework.test.context.support.AnnotationConfigContextLoader, parent = null]
@@ -267,3 +268,6 @@ java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceed
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.477 s -- in unlp.info.bd2.ToursApplicationTests
+>>>>>>> origin/models_josue

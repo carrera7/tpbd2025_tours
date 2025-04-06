@@ -2,51 +2,63 @@ package unlp.info.bd2.model;
 
 import java.util.Date;
 import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "compras")
+@Table(name = "purchase")
 public class Purchase {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "compras_id")
-    Long id;
+    public Purchase(){
 
-    @Column(name = "codigo")
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "code", length = 255, nullable = false, unique = true)
     private String code;
 
-    @Column(name = "precio_total")
+    @Column(name = "total_price")
     private float totalPrice;
 
-    @Column(name = "fecha")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date", nullable = false)
     private Date date;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuarios_id", referencedColumnName = "usuarios_id")
+    // Relación con User
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
-    @JoinColumn(name = "id_route", referencedColumnName = "id_route")
+    // Relación con Route
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "review_id", referencedColumnName = "review_id")
+    // Relación uno a uno con Review (opcional)
+    @OneToOne(mappedBy = "purchase", cascade = CascadeType.ALL,orphanRemoval = true)
     private Review review;
 
+    // Relación con ItemService
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemService> itemServiceList;
+
+    public Purchase(String code, Route route, User user){
+        this.setCode(code);
+        this.setRoute(route);
+        this.setUser(user);
+        this.date = new Date();
+        this.totalPrice = route.getPrice();
+    }
+
+    public Purchase(String code, Date date, Route route, User user){
+        this.setCode(code);
+        this.setRoute(route);
+        this.setUser(user);
+        this.setDate(date);
+        this.totalPrice = route.getPrice();
+    }
 
     public Long getId() {
         return id;
@@ -104,6 +116,7 @@ public class Purchase {
         this.review = review;
     }
 
+    
     public List<ItemService> getItemServiceList() {
         return itemServiceList;
     }

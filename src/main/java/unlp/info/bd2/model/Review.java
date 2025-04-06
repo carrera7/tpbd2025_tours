@@ -3,23 +3,32 @@ package unlp.info.bd2.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "reviews")
+@Table(name = "review")
 public class Review {
+
+    public Review() {
+        
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id")
     private Long id;
 
-    @Column(name = "rating", nullable = false)
+    @Column(name="rating")
     private int rating;
 
-    @Column(name = "comment", length = 1000)
+    @Column(name="comment",length = 255)
     private String comment;
 
-    @OneToOne(mappedBy = "review")
+    @OneToOne
+    @JoinColumn(name="purchase_id",unique=true, nullable = false)
     private Purchase purchase;
 
+    public Review(int rating, String comment, Purchase purchase){
+        this.setRating(rating);
+        this.setComment(comment);
+        this.setPurchase(purchase);
+    }
 
     public Long getId() {
         return id;

@@ -11,25 +11,41 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "item_de_servicio")
+@Table(name = "itemService")
 public class ItemService {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "item_de_servicio_id")
-    Long id;
+    public ItemService(){
 
-    @Column(name = "Cantidad")
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "quantity")
     private int quantity;
 
-    //@Column(name = "compra") esto rompe el mvn , revisar si hay que sacar
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "compras_id", referencedColumnName = "compras_id") // si se llega a romper el id de esto, es por los nombres
+    /**La anotación @ManyToOne(optional = false) 
+     * asegura que cada ItemService debe estar vinculado a un Purchase 
+     * y un Service. cascade = CascadeType.ALL en la relación con Purchase 
+     * simula la composición: si se elimina un Purchase, se eliminan sus ItemService. 
+     * */
+    // Relación Muchos a Uno con Purchase (composición: Purchase tiene muchos ItemService)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "purchase_id", nullable = false)
     private Purchase purchase;
 
+    // Relación Muchos a Uno solo Service
     @ManyToOne
-    @JoinColumn(name = "servicio_id", referencedColumnName = "servicios_id")
+    @JoinColumn(name = "service_id", nullable = false)
     private Service service;
+
+    public ItemService(Service service, int quantity, Purchase purchase) {
+        this.setService(service);
+        this.setQuantity(quantity);
+        this.setPurchase(purchase);
+    }
+    
 
     public Long getId() {
         return id;

@@ -4,29 +4,35 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import jakarta.persistence.*;
+
 @Entity
-@Table(name = "servicios")
+@Table(name = "service")
 public class Service {
+    
+    public Service(){
+        
+    }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "servicios_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // si es autoincremental en la DB
     private Long id;
-
-    @Column(name = "nombre")
+    
+    @Column(name="name",length = 100)
     private String name;
 
-    @Column(name = "precio")
+    @Column(name="price")
     private float price;
 
-    @Column(name = "descripcion")
+    @Column(name="description",columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemService> itemServiceList;
+    private List<ItemService> itemServiceList = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "proveedor_id", referencedColumnName = "proveedor_id")
+    @JoinColumn(name = "supplier_id",nullable = false) // Esta será la columna FK en la tabla "Service"
     private Supplier supplier;
 
 
@@ -51,7 +57,13 @@ public class Service {
     }
 
     public void setPrice(float price) {
-        this.price = price;
+    if (price < 0) {
+        throw new IllegalArgumentException("El precio no puede ser negativo.");
+    }
+    if (price > 1_000_000) {
+        throw new IllegalArgumentException("El precio es demasiado alto.");
+    }
+    this.price = price;
     }
 
     public String getDescription() {

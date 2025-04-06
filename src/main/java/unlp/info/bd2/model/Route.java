@@ -3,63 +3,63 @@ package unlp.info.bd2.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "routes")
+@Table(name = "route")
 public class Route {
 
+    public Route(){
+
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_routes")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 100, nullable = false)
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private float price;
 
-    @Column(name = "total_km")
+    @Column(name="totalKm")
     private float totalKm;
 
-    @Column(name = "max_number_users")
+    @Column(name="maxNumberUsers")
     private int maxNumberUsers;
 
-    /*
-     * modificacion a @OneToMany
-     * 
-     * @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval =
-     * true)
-     * 
-     * @JoinColumn(name = "route_id")
-     * private List<Stop> stops;
-     */
+    @ManyToMany(fetch = FetchType.LAZY) // o EAGER si realmente se usa siempre
+    @JoinTable(
+        name = "route_stop",
+        joinColumns = @JoinColumn(name = "route_id"),
+        inverseJoinColumns = @JoinColumn(name = "stop_id")
+    )
+    private List<Stop> stops = new ArrayList<>();
 
-    // @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval =
-    // true) @Column(name = "parada")
-    // private List<Stop> stops;|
+    @ManyToMany(fetch = FetchType.LAZY) // o EAGER si realmente se usa siempre
+    @JoinTable(
+        name = "route_driver",
+        joinColumns = @JoinColumn(name = "route_id"),
+        inverseJoinColumns = @JoinColumn(name = "driver_id")
+    )
+    private List<DriverUser> driverList = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER )// ver el estandar por default, el persis solo permite guardado , pero como en los test genera las paradas y despues las rutas , se pueden scar todo tipo de cascade tyoe
-    //no va ophanage removal porque sis e queire tneer paradas sueltas para aa futuro asociar a rutas
-    @JoinTable(name = "route_stop", joinColumns = @JoinColumn(name = "id_route", nullable = false), inverseJoinColumns = @JoinColumn(name = "id_stop", nullable = false) )
-    private List<Stop> stops;
+    @ManyToMany(fetch = FetchType.LAZY) // o EAGER si realmente se usa siempre
+    @JoinTable(
+        name = "route_tour_guide",
+        joinColumns = @JoinColumn(name = "route_id"),
+        inverseJoinColumns = @JoinColumn(name = "tour_guide_id")
+    )
+    private List<TourGuideUser> tourGuideList = new ArrayList<>();
 
-    @ManyToMany
-    @Column(name = "lista_de_chofer")
-    private List<DriverUser> driverList;
-
-    @ManyToMany
-    private List<TourGuideUser> tourGuideList;
+    public Route(String name, float price, float totalKm, int maxNumberOfUsers, List<Stop> stops){
+       this.setName(name);
+       this.setPrice(price);
+       this.setTotalKm(totalKm);
+       this.setMaxNumberUsers(maxNumberOfUsers);
+       this.stops = new ArrayList<>(); 
+    }
 
 
     public Long getId() {
@@ -125,5 +125,19 @@ public class Route {
     public void setTourGuideList(List<TourGuideUser> tourGuideList) {
         this.tourGuideList = tourGuideList;
     }
+
+    public void addDriver(DriverUser driverUser) {
+        if (driverUser != null && !driverList.contains(driverUser)) {
+            driverList.add(driverUser);
+        }
+    }
+
+    public void addTourGuide(TourGuideUser tourGuideUser) {
+        if (tourGuideUser != null && !tourGuideList.contains(tourGuideUser)) {
+            tourGuideList.add(tourGuideUser);
+        }
+    }
+    
+    
 
 }

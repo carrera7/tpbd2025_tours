@@ -2,30 +2,27 @@ package unlp.info.bd2.model;
 
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "proveedor")
+@Table(name = "supplier")
 public class Supplier {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "proveedor_id")
-    private Long id;
+    public Supplier(){
+        
+    }
 
-    @Column(name = "nombre_de_negocio")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Suponiendo autoincremental
+    private Long id;
+    
+    @Column(name="businessName",columnDefinition = "TEXT")
     private String businessName;
 
-    @Column(name = "numero_authenticacion")
+    @Column(name="authorizationNumber",columnDefinition = "TEXT")
     private String authorizationNumber;
 
-    @OneToMany(mappedBy = "supplier")   
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Service> services;
 
 

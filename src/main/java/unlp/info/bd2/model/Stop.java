@@ -1,12 +1,10 @@
 package unlp.info.bd2.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
-@Entity(name = "Stop")
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "stop")
 public class Stop {
 
     public Stop(){
@@ -22,6 +20,11 @@ public class Stop {
 
     @Column(name = "description",columnDefinition = "TEXT") // o ajustá según el tipo real
     private String description;
+
+    public Stop(String name, String description) {
+        this.setName(name);
+        this.setDescription(description);
+    }
 
 
     public Long getId() {
