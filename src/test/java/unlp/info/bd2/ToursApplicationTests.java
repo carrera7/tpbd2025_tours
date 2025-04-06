@@ -334,5 +334,7 @@ class ToursApplicationTests {
 	@Test
     void testStopFields() {
         Stop stop = new Stop();
+		Service service = new Service();
 	}
+	
 }

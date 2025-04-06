@@ -3,23 +3,63 @@ package unlp.info.bd2.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "route")
 public class Route {
 
+    public Route(){
+
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   
     private Long id;
 
+    @Column(name = "name", length = 100, nullable = false)
     private String name;
 
+    @Column(name = "price", nullable = false)
     private float price;
 
+    @Column(name="totalKm")
     private float totalKm;
 
+    @Column(name="maxNumberUsers")
     private int maxNumberUsers;
 
-    private List<Stop> stops;
+    @ManyToMany(fetch = FetchType.LAZY) // o EAGER si realmente se usa siempre
+    @JoinTable(
+        name = "route_stop",
+        joinColumns = @JoinColumn(name = "route_id"),
+        inverseJoinColumns = @JoinColumn(name = "stop_id")
+    )
+    private List<Stop> stops = new ArrayList<>();
 
-    private List<DriverUser> driverList;
+    @ManyToMany(fetch = FetchType.LAZY) // o EAGER si realmente se usa siempre
+    @JoinTable(
+        name = "route_driver",
+        joinColumns = @JoinColumn(name = "route_id"),
+        inverseJoinColumns = @JoinColumn(name = "driver_id")
+    )
+    private List<DriverUser> driverList = new ArrayList<>();
 
-    private List<TourGuideUser> tourGuideList;
+    @ManyToMany(fetch = FetchType.LAZY) // o EAGER si realmente se usa siempre
+    @JoinTable(
+        name = "route_tour_guide",
+        joinColumns = @JoinColumn(name = "route_id"),
+        inverseJoinColumns = @JoinColumn(name = "tour_guide_id")
+    )
+    private List<TourGuideUser> tourGuideList = new ArrayList<>();
+
+    public Route(String name, float price, float totalKm, int maxNumberOfUsers, List<Stop> stops){
+       this.setName(name);
+       this.setPrice(price);
+       this.setTotalKm(totalKm);
+       this.setMaxNumberUsers(maxNumberOfUsers);
+       this.stops = new ArrayList<>(); 
+    }
 
     public Long getId() {
         return id;
@@ -84,5 +124,19 @@ public class Route {
     public void setTourGuideList(List<TourGuideUser> tourGuideList) {
         this.tourGuideList = tourGuideList;
     }
+
+    public void addDriver(DriverUser driverUser) {
+        if (driverUser != null && !driverList.contains(driverUser)) {
+            driverList.add(driverUser);
+        }
+    }
+
+    public void addTourGuide(TourGuideUser tourGuideUser) {
+        if (tourGuideUser != null && !tourGuideList.contains(tourGuideUser)) {
+            tourGuideList.add(tourGuideUser);
+        }
+    }
+    
+    
 
 }

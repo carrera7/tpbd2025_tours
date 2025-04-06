@@ -2,14 +2,27 @@ package unlp.info.bd2.model;
 
 import java.util.List;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "supplier")
 public class Supplier {
 
-    private Long id;
+    public Supplier(){
+        
+    }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Suponiendo autoincremental
+    private Long id;
+    
+    @Column(name="businessName",columnDefinition = "TEXT")
     private String businessName;
 
+    @Column(name="authorizationNumber",columnDefinition = "TEXT")
     private String authorizationNumber;
 
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Service> services;
 
     public Long getId() {

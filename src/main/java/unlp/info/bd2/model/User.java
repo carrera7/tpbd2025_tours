@@ -4,24 +4,44 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class User {
 
+    public User(){
+        
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
+    @Column(name = "username", length = 100, unique = true, nullable = false)
     private String username;
 
+    @Column(name = "password", length = 100, nullable = false)
     private String password;
 
+    @Column(name = "name", length = 100)
     private String name;
 
+    @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "birthdate")
     private Date birthdate;
 
+    @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
+    @Column(name = "active", nullable = false)
     private boolean active;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Purchase> purchaseList;
 
 
@@ -96,4 +116,17 @@ public class User {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    //agrego metodos
+    public User(String username, String password, String fullName, String email, Date birthdate, String phoneNumber) {
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setName(name);
+        this.setEmail(email);
+        this.setBirthdate(birthdate);
+        this.setPhoneNumber(phoneNumber);
+        this.active = true; // Por defecto lo seteamos como activo
+        this.purchaseList = new ArrayList<>();
+    }
+    
 }

@@ -21,10 +21,10 @@ import unlp.info.bd2.utils.DBInitializer;
 @Transactional
 @Rollback(true)
 public class ToursQuerysTests {
-
+    
     @Autowired
     DBInitializer initializer;
-
+    /** 
     @Autowired
     ToursService service;
 
