@@ -2,6 +2,7 @@ package unlp.info.bd2.repositories;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,10 @@ public class ToursRepositoryImpl implements ToursRepository{
     @Autowired
     private SessionFactory session;
 
-    public void save(Object o){
+    @Override
+    public <T> T save(T o){
         session.getCurrentSession().persist(o);
+        return o;
     }
 
     @Override
@@ -105,5 +108,23 @@ public class ToursRepositoryImpl implements ToursRepository{
     public List<TourGuideUser> getTourGuidesWithRating1() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTourGuidesWithRating1'");
+    }
+
+    @Override
+    public Optional<Stop> findStopByName(String name) {
+        return session.getCurrentSession().createQuery(
+            "FROM Stop s WHERE s.name = :name", Stop.class)
+            .setParameter("name", name)
+            .getResultList()
+            .stream()
+            .findFirst();
+    }
+
+    @Override
+    public List<Stop> findStopByNameStartingWith(String prefix) {
+        String query =  "FROM Stop s WHERE s.name LIKE :prefix";
+        return session.getCurrentSession().createQuery(query, Stop.class)
+            .setParameter("prefix", prefix + "%")
+            .getResultList();
     }
 }

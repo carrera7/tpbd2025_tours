@@ -75,25 +75,22 @@ public class ToursServiceImpl implements ToursService{
     }
 
     @Override
-    public Stop createStop(String name, String description) {
-        Stop s = new Stop();
-        tourRepository.save(s);
-        return s;
-        //verifico que no exista una parada con el mismo nombre
-        // if (tourRepository.findByName(name).isPresent()) {
-        //     System.out.println("Ya existe una parada con ese nombre");
-        //     return null; 
-        //     // throw new ToursException("Ya existe una parada con ese nombre"); esto es necesario para el caso donde ya esta presente?ta presente?
-        // }
-        // //Crea y guardo la nueva parada
-        // Stop stop = new Stop(name, description);
-        // return tourRepository.save(stop);
+    public Stop createStop(String name, String description) throws ToursException {
+        Optional<Stop> existingStop = tourRepository.findStopByName(name);
+        if (existingStop.isPresent()) {
+            throw new ToursException("Ya existe una parada con ese nombre");
+        }
+        Stop stop = new Stop();
+        stop.setName(name);
+        stop.setDescription(description);
+        System.out.println("Guardando la parada: " + stop);
+        return tourRepository.save(stop);
     }
+
 
     @Override
     public List<Stop> getStopByNameStart(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStopByNameStart'");
+        return tourRepository.findStopByNameStartingWith(name);
     }
 
     @Override

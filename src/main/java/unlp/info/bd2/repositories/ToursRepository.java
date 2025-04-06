@@ -1,6 +1,8 @@
 package unlp.info.bd2.repositories;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 import unlp.info.bd2.model.Purchase;
 import unlp.info.bd2.model.Route;
 import unlp.info.bd2.model.Service;
@@ -11,7 +13,7 @@ import unlp.info.bd2.model.User;
 
 public interface ToursRepository {
 
-    void save(Object o);
+    <T> T save(T o);
     List<Purchase> getAllPurchasesOfUsername(String username);
     List<User> getUserSpendingMoreThan(float mount);
     List<Supplier> getTopNSuppliersInPurchases(int n);
@@ -25,4 +27,6 @@ public interface ToursRepository {
     Service getMostDemandedService();
     List<Service> getServiceNoAddedToPurchases();
     List<TourGuideUser> getTourGuidesWithRating1();
+    Optional<Stop> findStopByName(String name);
+    List<Stop> findStopByNameStartingWith(String prefix);
 }
