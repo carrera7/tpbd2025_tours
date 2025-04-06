@@ -1,5 +1,6 @@
 package unlp.info.bd2.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -9,7 +10,7 @@ import jakarta.persistence.*;
 public class Supplier {
 
     public Supplier(){
-        
+        this.services = new ArrayList<Service>(); // esta bien instanciarlo??
     }
 
     @Id
@@ -19,7 +20,7 @@ public class Supplier {
     @Column(name="businessName",columnDefinition = "TEXT")
     private String businessName;
 
-    @Column(name="authorizationNumber",columnDefinition = "TEXT")
+    @Column(name="authorizationNumber",columnDefinition = "TEXT", unique = true)
     private String authorizationNumber;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)

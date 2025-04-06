@@ -14,7 +14,7 @@ public class DriverUser extends User {
     public DriverUser(){    
     }
 
-    @Column(name = "expedient", length = 100, nullable = true, unique = true) // cambie el nullable a true para pruebas
+    @Column(name = "expedient", length = 100, nullable = true, unique = false) // cambie el nullable a true para pruebas
     private String expedient;
 
     @ManyToMany(mappedBy = "driverList")
