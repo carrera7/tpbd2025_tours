@@ -1,108 +1,118 @@
 -------------------------------------------------------------------------------
 Test set: unlp.info.bd2.ToursQuerysTests
 -------------------------------------------------------------------------------
-Tests run: 14, Failures: 0, Errors: 13, Skipped: 0, Time elapsed: 1.737 s <<< FAILURE! -- in unlp.info.bd2.ToursQuerysTests
-unlp.info.bd2.ToursQuerysTests.getRoutsNotSellTest -- Time elapsed: 0.327 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getRoutsNotSell'
-	at unlp.info.bd2.services.ToursServiceImpl.getRoutsNotSell(ToursServiceImpl.java:254)
-	at unlp.info.bd2.ToursQuerysTests.getRoutsNotSellTest(ToursQuerysTests.java:137)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getAllPurchasesOfUsernameTest -- Time elapsed: 0.003 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getAllPurchasesOfUsername'
-	at unlp.info.bd2.services.ToursServiceImpl.getAllPurchasesOfUsername(ToursServiceImpl.java:206)
-	at unlp.info.bd2.ToursQuerysTests.getAllPurchasesOfUsernameTest(ToursQuerysTests.java:56)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getRoutesWithStopTest -- Time elapsed: 0.003 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getStopByNameStart'
-	at unlp.info.bd2.services.ToursServiceImpl.getStopByNameStart(ToursServiceImpl.java:96)
-	at unlp.info.bd2.ToursQuerysTests.getRoutesWithStopTest(ToursQuerysTests.java:115)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getServiceNoAddedToPurchasesTest -- Time elapsed: 0.004 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getServiceNoAddedToPurchases'
-	at unlp.info.bd2.services.ToursServiceImpl.getServiceNoAddedToPurchases(ToursServiceImpl.java:272)
-	at unlp.info.bd2.ToursQuerysTests.getServiceNoAddedToPurchasesTest(ToursQuerysTests.java:158)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getMaxStopOfRoutesTest -- Time elapsed: 0.003 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getMaxStopOfRoutes'
-	at unlp.info.bd2.services.ToursServiceImpl.getMaxStopOfRoutes(ToursServiceImpl.java:248)
-	at unlp.info.bd2.ToursQuerysTests.getMaxStopOfRoutesTest(ToursQuerysTests.java:131)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getTop10MoreExpensivePurchasesInServicesTest -- Time elapsed: 0.002 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getTop10MoreExpensivePurchasesInServices'
-	at unlp.info.bd2.services.ToursServiceImpl.getTop10MoreExpensivePurchasesInServices(ToursServiceImpl.java:224)
-	at unlp.info.bd2.ToursQuerysTests.getTop10MoreExpensivePurchasesInServicesTest(ToursQuerysTests.java:90)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getTopNSuppliersInPurchasesTest -- Time elapsed: 0.002 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getTopNSuppliersInPurchases'
-	at unlp.info.bd2.services.ToursServiceImpl.getTopNSuppliersInPurchases(ToursServiceImpl.java:218)
-	at unlp.info.bd2.ToursQuerysTests.getTopNSuppliersInPurchasesTest(ToursQuerysTests.java:80)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getTop5UsersMorePurchasesTest -- Time elapsed: 0.002 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getTop5UsersMorePurchases'
-	at unlp.info.bd2.services.ToursServiceImpl.getTop5UsersMorePurchases(ToursServiceImpl.java:230)
-	at unlp.info.bd2.ToursQuerysTests.getTop5UsersMorePurchasesTest(ToursQuerysTests.java:97)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getUserSpendingMoreThanTest -- Time elapsed: 0.002 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getUserSpendingMoreThan'
-	at unlp.info.bd2.services.ToursServiceImpl.getUserSpendingMoreThan(ToursServiceImpl.java:212)
-	at unlp.info.bd2.ToursQuerysTests.getUserSpendingMoreThanTest(ToursQuerysTests.java:68)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getMostDemandedServiceTest -- Time elapsed: 0.002 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getMostDemandedService'
-	at unlp.info.bd2.services.ToursServiceImpl.getMostDemandedService(ToursServiceImpl.java:266)
-	at unlp.info.bd2.ToursQuerysTests.getMostDemandedServiceTest(ToursQuerysTests.java:151)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getTourGuidesWithRating1Test -- Time elapsed: 0.001 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getTourGuidesWithRating1'
-	at unlp.info.bd2.services.ToursServiceImpl.getTourGuidesWithRating1(ToursServiceImpl.java:278)
-	at unlp.info.bd2.ToursQuerysTests.getTourGuidesWithRating1Test(ToursQuerysTests.java:165)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getTop3RoutesWithMaxRatingTest -- Time elapsed: 0.002 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getTop3RoutesWithMaxRating'
-	at unlp.info.bd2.services.ToursServiceImpl.getTop3RoutesWithMaxRating(ToursServiceImpl.java:260)
-	at unlp.info.bd2.ToursQuerysTests.getTop3RoutesWithMaxRatingTest(ToursQuerysTests.java:144)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
-unlp.info.bd2.ToursQuerysTests.getCountOfPurchasesBetweenDatesTest -- Time elapsed: 0.002 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'getCountOfPurchasesBetweenDates'
-	at unlp.info.bd2.services.ToursServiceImpl.getCountOfPurchasesBetweenDates(ToursServiceImpl.java:236)
-	at unlp.info.bd2.ToursQuerysTests.getCountOfPurchasesBetweenDatesTest(ToursQuerysTests.java:105)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.438 s <<< FAILURE! -- in unlp.info.bd2.ToursQuerysTests
+unlp.info.bd2.ToursQuerysTests -- Time elapsed: 0.438 s <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@748a654a testClass = unlp.info.bd2.ToursQuerysTests, locations = [], classes = [unlp.info.bd2.config.HibernateConfiguration, unlp.info.bd2.config.AppConfig, unlp.info.bd2.utils.DBInitializer], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@46cdf8bd, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@644baf4a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@17f62e33, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7f485fda, org.springframework.boot.test.context.SpringBootTestAnnotation@7c8f9b8], contextLoader = org.springframework.test.context.support.AnnotationConfigContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:142)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:98)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:315)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:807)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'DBInitializer': Unsatisfied dependency expressed through field 'toursService': Error creating bean with name 'createService' defined in unlp.info.bd2.config.AppConfig: Failed to instantiate [unlp.info.bd2.services.ToursService]: Factory method 'createService' threw exception with message: Error creating bean with name 'createRepository': Unsatisfied dependency expressed through field 'session': Error creating bean with name 'sessionFactory' defined in unlp.info.bd2.config.HibernateConfiguration: A '@JoinColumn' references a column named 'id_route' but the target entity 'unlp.info.bd2.model.Route' has no property which maps to this column
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:787)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1419)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:959)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 15 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'createService' defined in unlp.info.bd2.config.AppConfig: Failed to instantiate [unlp.info.bd2.services.ToursService]: Factory method 'createService' threw exception with message: Error creating bean with name 'createRepository': Unsatisfied dependency expressed through field 'session': Error creating bean with name 'sessionFactory' defined in unlp.info.bd2.config.HibernateConfiguration: A '@JoinColumn' references a column named 'id_route' but the target entity 'unlp.info.bd2.model.Route' has no property which maps to this column
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:651)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:485)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1335)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1165)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784)
+	... 32 more
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [unlp.info.bd2.services.ToursService]: Factory method 'createService' threw exception with message: Error creating bean with name 'createRepository': Unsatisfied dependency expressed through field 'session': Error creating bean with name 'sessionFactory' defined in unlp.info.bd2.config.HibernateConfiguration: A '@JoinColumn' references a column named 'id_route' but the target entity 'unlp.info.bd2.model.Route' has no property which maps to this column
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:177)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:647)
+	... 45 more
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'createRepository': Unsatisfied dependency expressed through field 'session': Error creating bean with name 'sessionFactory' defined in unlp.info.bd2.config.HibernateConfiguration: A '@JoinColumn' references a column named 'id_route' but the target entity 'unlp.info.bd2.model.Route' has no property which maps to this column
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:787)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1419)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.resolveBeanReference(ConfigurationClassEnhancer.java:362)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:334)
+	at unlp.info.bd2.config.AppConfig$$SpringCGLIB$$0.createRepository(<generated>)
+	at unlp.info.bd2.config.AppConfig.createService(AppConfig.java:15)
+	at unlp.info.bd2.config.AppConfig$$SpringCGLIB$$0.CGLIB$createService$0(<generated>)
+	at unlp.info.bd2.config.AppConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:331)
+	at unlp.info.bd2.config.AppConfig$$SpringCGLIB$$0.createService(<generated>)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:140)
+	... 46 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in unlp.info.bd2.config.HibernateConfiguration: A '@JoinColumn' references a column named 'id_route' but the target entity 'unlp.info.bd2.model.Route' has no property which maps to this column
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784)
+	... 67 more
+Caused by: org.hibernate.MappingException: A '@JoinColumn' references a column named 'id_route' but the target entity 'unlp.info.bd2.model.Route' has no property which maps to this column
+	at org.hibernate.boot.model.internal.AnnotatedJoinColumns.getReferencedColumnsType(AnnotatedJoinColumns.java:321)
+	at org.hibernate.boot.model.internal.BinderHelper.createSyntheticPropertyReference(BinderHelper.java:153)
+	at org.hibernate.boot.model.internal.ToOneFkSecondPass.doSecondPass(ToOneFkSecondPass.java:107)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.processEndOfQueue(InFlightMetadataCollectorImpl.java:1910)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.processFkSecondPassesInOrder(InFlightMetadataCollectorImpl.java:1859)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.processSecondPasses(InFlightMetadataCollectorImpl.java:1768)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:332)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.build(MetadataBuildingProcess.java:129)
+	at org.hibernate.boot.internal.MetadataBuilderImpl.build(MetadataBuilderImpl.java:449)
+	at org.hibernate.boot.internal.MetadataBuilderImpl.build(MetadataBuilderImpl.java:101)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:910)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:960)
+	at org.springframework.orm.hibernate5.LocalSessionFactoryBean.buildSessionFactory(LocalSessionFactoryBean.java:616)
+	at org.springframework.orm.hibernate5.LocalSessionFactoryBean.afterPropertiesSet(LocalSessionFactoryBean.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	... 77 more
 

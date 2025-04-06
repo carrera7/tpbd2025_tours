@@ -1,5 +1,6 @@
 package unlp.info.bd2.repositories;
 import java.util.List;
+import java.util.Optional;
 import java.util.Date;
 import unlp.info.bd2.model.Purchase;
 import unlp.info.bd2.model.Route;
@@ -25,4 +26,7 @@ public interface ToursRepository {
     Service getMostDemandedService();
     List<Service> getServiceNoAddedToPurchases();
     List<TourGuideUser> getTourGuidesWithRating1();
+    Optional<User> findByUsername(String Username);
+    Optional<User> findById(Long Id);
+    void delete(Object o);
 }

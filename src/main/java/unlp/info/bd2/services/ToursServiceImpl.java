@@ -29,11 +29,35 @@ public class ToursServiceImpl implements ToursService{
         this.tourRepository= repository;
     }
 
+    private boolean verificarUsuarioExistente (String username) throws ToursException{
+        if (tourRepository.findByUsername(username).isPresent()) {
+            throw new ToursException("El nombre de usuario ya está en uso");
+        }
+        return true;
+    }
+
     @Override
     public User createUser(String username, String password, String fullName, String email, Date birthdate,
             String phoneNumber) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createUser'");
+               
+                if (verificarUsuarioExistente(username)) {
+                    throw new ToursException("El nombre de usuario ya está en uso");
+                }
+        
+                // Crear un nuevo usuario
+                User newUser = new User();
+                newUser.setUsername(username);
+                
+                newUser.setPassword(password);
+            
+                newUser.setName(fullName);
+                newUser.setEmail(email);
+                newUser.setBirthdate(birthdate);
+                newUser.setPhoneNumber(phoneNumber);
+            
+                tourRepository.save(newUser);
+                // Guardar usuario en la base de datos
+                return newUser;  
     }
 
     @Override
