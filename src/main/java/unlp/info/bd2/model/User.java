@@ -68,8 +68,10 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String username) { // se pueden modificar los setters y getters???
+        if (this.username == null) {
+            this.username = username;
+        }
     }
 
     public String getPassword() {
