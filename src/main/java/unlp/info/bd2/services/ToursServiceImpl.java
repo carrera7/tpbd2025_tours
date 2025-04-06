@@ -1,5 +1,6 @@
 package unlp.info.bd2.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +8,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import unlp.info.bd2.model.DriverUser;
 import unlp.info.bd2.model.ItemService;
@@ -36,33 +40,42 @@ public class ToursServiceImpl implements ToursService{
     }
 
     @Override
+    @Transactional
     public User createUser(String username, String password, String fullName, String email, Date birthdate,
-        String phoneNumber) throws ToursException {
+            String phoneNumber) throws ToursException {
         try {
-            return new User(username, password, fullName, email, birthdate, phoneNumber);
+            User user = new User(username, password, fullName, email, birthdate, phoneNumber);
+            entityManager.persist(user);
+            return user;
         } catch (Exception e) {
-            throw new ToursException("Error al instanciar User" + e);
+            throw new ToursException("Error al crear y persistir User: " + e.getMessage());
         }
     }
-
+    
     @Override
+    @Transactional
     public DriverUser createDriverUser(String username, String password, String fullName, String email, Date birthdate,
-            String phoneNumber, String expedient)throws ToursException {
-            try {    
-                return new DriverUser(username,password,fullName,email,birthdate,phoneNumber,expedient);
-            } catch(Exception e){
-                throw new ToursException("Error al intanciar DriverUser" + e);
-            }       
+            String phoneNumber, String expedient) throws ToursException {
+        try {
+            DriverUser driverUser = new DriverUser(username, password, fullName, email, birthdate, phoneNumber, expedient);
+            entityManager.persist(driverUser);
+            return driverUser;
+        } catch (Exception e) {
+            throw new ToursException("Error al crear y persistir DriverUser: " + e.getMessage());
         }
-
+    }
+    
     @Override
+    @Transactional
     public TourGuideUser createTourGuideUser(String username, String password, String fullName, String email,
             Date birthdate, String phoneNumber, String education) throws ToursException {
-            try {    
-                return new TourGuideUser(username,password,fullName,email,birthdate,phoneNumber,education);
-            } catch (Exception e){
-                throw new ToursException("Error al intanciar TourGuideUser"+e);
-            }
+        try {
+            TourGuideUser tourGuideUser = new TourGuideUser(username, password, fullName, email, birthdate, phoneNumber, education);
+            entityManager.persist(tourGuideUser);
+            return tourGuideUser;
+        } catch (Exception e) {
+            throw new ToursException("Error al crear y persistir TourGuideUser: " + e.getMessage());
+        }
     }
 
     @Override
@@ -78,207 +91,589 @@ public class ToursServiceImpl implements ToursService{
 
     @Override
     public Optional<User> getUserByUsername(String username) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserByUsername'");
+        try {
+            TypedQuery<User> query = entityManager.createQuery(
+                "SELECT u FROM User u WHERE u.username = :username", User.class);
+            query.setParameter("username", username);
+    
+            List<User> result = query.getResultList();
+    
+            return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
+        } catch (Exception e) {
+            throw new ToursException("Error al obtener usuario por nombre de usuario: " + username);
+        }
     }
 
+    /*o mejor utiliso un EntityTransaction  */
     @Override
     public User updateUser(User user) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+        User existingUser = entityManager.find(User.class, user.getId());
+        if (existingUser == null) {
+            throw new ToursException("No se encontró el usuario con ID: " + user.getId());
+        }
+    
+        existingUser.setUsername(user.getUsername());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setName(user.getName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setBirthdate(user.getBirthdate());
+        existingUser.setPhoneNumber(user.getPhoneNumber());
+        existingUser.setActive(user.isActive());
+    
+        return existingUser;
+
     }
 
     @Override
+    @Transactional
     public void deleteUser(User user) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+        try {
+            // Nos aseguramos de que el usuario esté gestionado por el EntityManager
+            User managedUser = entityManager.contains(user) ? user : entityManager.merge(user);
+            
+            entityManager.remove(managedUser);
+        } catch (Exception e) {
+            throw new ToursException("Error al eliminar el usuario con ID: " + user.getId());
+        }
     }
 
     @Override
-    public Stop createStop(String name, String description) {
-        Stop s = new Stop();
-        tourRepository.save(s);
-        return s;
-        //verifico que no exista una parada con el mismo nombre
-        // if (tourRepository.findByName(name).isPresent()) {
-        //     System.out.println("Ya existe una parada con ese nombre");
-        //     return null; 
-        //     // throw new ToursException("Ya existe una parada con ese nombre"); esto es necesario para el caso donde ya esta presente?ta presente?
-        // }
-        // //Crea y guardo la nueva parada
-        // Stop stop = new Stop(name, description);
-        // return tourRepository.save(stop);
+    @Transactional
+    public Stop createStop(String name, String description) throws ToursException {
+        try {
+            Stop stop = new Stop(name, description);
+            entityManager.persist(stop);
+            return stop;
+        } catch (Exception e) {
+            throw new ToursException("Error al crear la parada (Stop): " + e.getMessage());
+        }
     }
-
+    
     @Override
     public List<Stop> getStopByNameStart(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStopByNameStart'");
+        TypedQuery<Stop> query = entityManager.createQuery(
+            "SELECT s FROM Stop s WHERE s.name LIKE :namePrefix", Stop.class
+        );
+        query.setParameter("namePrefix", name + "%");
+        return query.getResultList();
     }
+    
 
     @Override
+    @Transactional
     public Route createRoute(String name, float price, float totalKm, int maxNumberOfUsers, List<Stop> stops)
             throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createRoute'");
+        try {
+            Route route = new Route(name, price, totalKm, maxNumberOfUsers, stops);
+            route.setStops(stops); // Establecemos explícitamente las paradas
+            entityManager.persist(route);
+            return route;
+        } catch (Exception e) {
+            throw new ToursException("Error al crear la ruta: " + e.getMessage());
+        }
     }
 
     @Override
     public Optional<Route> getRouteById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRouteById'");
+        /**
+         * Si no se encuentra, devuelve null, por eso lo envolvemos con Optional.ofNullable(...).
+         */
+        Route route = entityManager.find(Route.class, id);
+        return Optional.ofNullable(route);
     }
+
+    /**
+     * busca y devuelve todas las rutas (Route) cuya columna price (precio) sea menor al valor pasado como parámetro.
+     */
 
     @Override
     public List<Route> getRoutesBelowPrice(float price) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRoutesBelowPrice'");
+        TypedQuery<Route> query = entityManager.createQuery(
+            "SELECT r FROM Route r WHERE r.price < :price", Route.class);
+        query.setParameter("price", price);
+    
+        return query.getResultList();
     }
-
+    
+    /**
+     * asocia un conductor (DriverUser) identificado por su username a una ruta (Route) identificada por su id.
+     * Es decir, si tenés una ruta de turismo y querés asignarle un conductor específico a esa ruta, este método lo hace.
+     */
     @Override
+    @Transactional
     public void assignDriverByUsername(String username, Long idRoute) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'assignDriverByUsername'");
+        try {
+            // Buscar el DriverUser por username
+            TypedQuery<DriverUser> query = entityManager.createQuery(
+                "SELECT d FROM DriverUser d WHERE d.username = :username", DriverUser.class);
+            query.setParameter("username", username);
+            List<DriverUser> drivers = query.getResultList();
+    
+            if (drivers.isEmpty()) {
+                throw new ToursException("No se encontró un conductor con username: " + username);
+            }
+    
+            DriverUser driver = drivers.get(0);
+    
+            // Buscar la Route por ID
+            Route route = entityManager.find(Route.class, idRoute);
+            if (route == null) {
+                throw new ToursException("No se encontró la ruta con ID: " + idRoute);
+            }
+    
+            // Asociar el conductor a la ruta
+            route.addDriver(driver);  // agrega a la lista de la ruta
+            driver.getRoutes().add(route); // agrega también en el lado del DriverUser (opcional, para mantener consistencia bidireccional)
+    
+            // merge por si alguno no está en el contexto de persistencia
+            entityManager.merge(route);
+            entityManager.merge(driver);
+    
+        } catch (Exception e) {
+            throw new ToursException("Error al asignar el conductor a la ruta: " + e.getMessage());
+        }
     }
 
+    /**
+     * Busca un guia turistico por su nombre y una ruta por su id y si existen los asocia 
+     */
     @Override
+    @Transactional
     public void assignTourGuideByUsername(String username, Long idRoute) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'assignTourGuideByUsername'");
+        try {
+            // Buscar guía turístico por username
+            TypedQuery<TourGuideUser> guideQuery = entityManager.createQuery(
+                "SELECT g FROM TourGuideUser g WHERE g.username = :username", TourGuideUser.class);
+            guideQuery.setParameter("username", username);
+            List<TourGuideUser> guides = guideQuery.getResultList();
+
+            if (guides.isEmpty()) {
+                throw new ToursException("Guía turístico no encontrado con username: " + username);
+            }
+
+            TourGuideUser guide = guides.get(0);
+
+            // Buscar la ruta por ID
+            Route route = entityManager.find(Route.class, idRoute);
+            if (route == null) {
+                throw new ToursException("Ruta no encontrada con ID: " + idRoute);
+            }
+
+            // Asignar guía a la ruta
+            if (!route.getTourGuideList().contains(guide)) {
+                route.getTourGuideList().add(guide);
+            }
+
+            // Asignar ruta al guía turístico (bidireccional)
+            if (guide.getRoutes() == null) {
+                guide.setRoutes(new ArrayList<>());
+            }
+            if (!guide.getRoutes().contains(route)) {
+                guide.getRoutes().add(route);
+            }
+
+            // Guardar los cambios
+            entityManager.merge(route);
+            entityManager.merge(guide);
+
+        } catch (Exception e) {
+            throw new ToursException("Error al asignar guía turístico con username: " + username + " a la ruta ID: " + idRoute);
+        }
     }
 
     @Override
+    @Transactional
     public Supplier createSupplier(String businessName, String authorizationNumber) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createSupplier'");
+        try {
+            Supplier supplier = new Supplier();
+            supplier.setBusinessName(businessName);
+            supplier.setAuthorizationNumber(authorizationNumber);
+
+            entityManager.persist(supplier);
+            return supplier;
+        } catch (Exception e) {
+            throw new ToursException("Error al crear el proveedor con nombre: " + businessName + e);
+        }
     }
 
     @Override
-    public Service addServiceToSupplier(String name, float price, String description, Supplier supplier)
-            throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addServiceToSupplier'");
+    @Transactional
+    public Service addServiceToSupplier(String name, float price, String description, Supplier supplier) throws ToursException {
+        try {
+            // Crear nuevo servicio
+            Service service = new Service();
+            service.setName(name);
+            service.setPrice(price); // Esta validación ya está implementada en el setter
+            service.setDescription(description);
+            service.setSupplier(supplier);
+    
+            // Persistir el servicio
+            entityManager.persist(service);
+    
+            // Actualizar la lista de servicios del proveedor (si no está null)
+            if (supplier.getServices() != null) {
+                supplier.getServices().add(service);
+            }
+    
+            return service;
+        } catch (Exception e) {
+            throw new ToursException("Error al agregar el servicio '" + name + "' al proveedor con ID: " + supplier.getId() + e);
+        }
     }
+    
 
     @Override
+    @Transactional
     public Service updateServicePriceById(Long id, float newPrice) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateServicePriceById'");
+        try {
+            // Buscar el servicio por ID
+            Service service = entityManager.find(Service.class, id);
+            
+            // Verificar si existe
+            if (service == null) {
+                throw new ToursException("No se encontró un servicio con ID: " + id);
+            }
+    
+            // Actualizar el precio (valida internamente en el setter)
+            service.setPrice(newPrice);
+    
+            // El cambio se sincroniza automáticamente por el contexto de persistencia
+            return service;
+    
+        } catch (IllegalArgumentException e) {
+            throw new ToursException("Precio inválido: " + e.getMessage());
+        } catch (Exception e) {
+            throw new ToursException("Error al actualizar el precio del servicio con ID: " + id + e);
+        }
     }
+    
 
     @Override
     public Optional<Supplier> getSupplierById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSupplierById'");
+        Supplier supplier = entityManager.find(Supplier.class, id);
+        return Optional.ofNullable(supplier);
     }
+    
 
     @Override
     public Optional<Supplier> getSupplierByAuthorizationNumber(String authorizationNumber) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSupplierByAuthorizationNumber'");
+        try {
+            Supplier supplier = entityManager
+                .createQuery("SELECT s FROM Supplier s WHERE s.authorizationNumber = :authNumber", Supplier.class)
+                .setParameter("authNumber", authorizationNumber)
+                .getSingleResult();
+            return Optional.of(supplier);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
+
 
     @Override
     public Optional<Service> getServiceByNameAndSupplierId(String name, Long id) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getServiceByNameAndSupplierId'");
+        try {
+            Service service = entityManager
+                .createQuery("SELECT s FROM Service s WHERE s.name = :name AND s.supplier.id = :supplierId", Service.class)
+                .setParameter("name", name)
+                .setParameter("supplierId", id)
+                .getSingleResult();
+            return Optional.of(service);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        } catch (Exception e) {
+            throw new ToursException("Error retrieving service by name and supplier ID" + e);
+        }
     }
+    
 
     @Override
+    @Transactional
     public Purchase createPurchase(String code, Route route, User user) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createPurchase'");
+        try {
+            Purchase purchase = new Purchase(code, route, user);
+            entityManager.persist(purchase);
+            return purchase;
+        } catch (Exception e) {
+            throw new ToursException("Error while creating a new purchase" + e);
+        }
     }
+    
 
     @Override
+    @Transactional
     public Purchase createPurchase(String code, Date date, Route route, User user) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createPurchase'");
+        try {
+            // Verificamos si ya existe una compra con ese código (opcional)
+            TypedQuery<Purchase> query = entityManager.createQuery(
+                "SELECT p FROM Purchase p WHERE p.code = :code", Purchase.class);
+            query.setParameter("code", code);
+    
+            List<Purchase> existing = query.getResultList();
+            if (!existing.isEmpty()) {
+                throw new ToursException("Ya existe una compra con el código: " + code);
+            }
+    
+            Purchase purchase = new Purchase(code, date, route, user);
+            entityManager.persist(purchase);
+            return purchase;
+        } catch (ToursException te) {
+            throw te;
+        } catch (Exception e) {
+            throw new ToursException("Error al crear la compra" + e);
+        }
     }
+    
 
     @Override
+    @Transactional
     public ItemService addItemToPurchase(Service service, int quantity, Purchase purchase) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addItemToPurchase'");
+        try {
+            if (service == null || purchase == null) {
+                throw new ToursException("Service y Purchase no pueden ser null");
+            }
+    
+            if (quantity <= 0) {
+                throw new ToursException("La cantidad debe ser mayor a 0");
+            }
+    
+            // Crear el nuevo ItemService
+            ItemService item = new ItemService(service, quantity, purchase);
+    
+            // Actualizar el precio total de la compra
+            float additionalCost = service.getPrice() * quantity;
+            purchase.setTotalPrice(purchase.getTotalPrice() + additionalCost);
+    
+            // Persistir el ItemService (como está en cascada, no es obligatorio persistir purchase de nuevo)
+            entityManager.persist(item);
+    
+            return item;
+        } catch (Exception e) {
+            throw new ToursException("Error al agregar el servicio a la compra" + e);
+        }
     }
+    
 
     @Override
     public Optional<Purchase> getPurchaseByCode(String code) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPurchaseByCode'");
+        try {
+            Purchase purchase = entityManager.createQuery(
+                    "SELECT p FROM Purchase p WHERE p.code = :code", Purchase.class)
+                    .setParameter("code", code)
+                    .getSingleResult();
+    
+            return Optional.of(purchase);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
-
+    
+    /**
+     * es parte de una expresión condicional ternaria, que es una forma compacta de escribir un if-else. Su estructura es:
+     * condición ? valor_si_verdadero : valor_si_falso;
+     */
     @Override
+    @Transactional
     public void deletePurchase(Purchase purchase) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletePurchase'");
+        try {
+            Purchase managedPurchase = entityManager.contains(purchase) 
+                ? purchase 
+                : entityManager.merge(purchase); // aseguramos que está gestionado
+    
+            entityManager.remove(managedPurchase);
+        } catch (Exception e) {
+            throw new ToursException("Error al eliminar la compra con código: " + purchase.getCode() + "error:" + e);
+        }
     }
+    
 
     @Override
+    @Transactional
     public Review addReviewToPurchase(int rating, String comment, Purchase purchase) throws ToursException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addReviewToPurchase'");
+        try {
+            // Verificar si la compra ya tiene una reseña
+            if (purchase.getReview() != null) {
+                throw new ToursException("La compra ya tiene una reseña asociada.");
+            }
+    
+            // Crear nueva Review
+            Review review = new Review(rating, comment, purchase);
+    
+            // Asociar la review a la compra
+            purchase.setReview(review);
+    
+            // Persistir la review
+            entityManager.persist(review);
+    
+            return review;
+        } catch (Exception e) {
+            throw new ToursException("Error al agregar la reseña a la compra: " + e.getMessage() + "error" + e);
+        }
     }
+    
+    
 
     @Override
+    @Transactional
     public List<Purchase> getAllPurchasesOfUsername(String username) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllPurchasesOfUsername'");
+        String queryStr = "SELECT p FROM Purchase p WHERE p.user.username = :username";
+        TypedQuery<Purchase> query = entityManager.createQuery(queryStr, Purchase.class);
+        query.setParameter("username", username);
+        return query.getResultList();
     }
-
+    
+    /**
+     * Consulta la base de datos para obtener todos los usuarios cuyo total de dinero gastado en compras (Purchase) 
+     * supera el valor mount que pasás como parámetro.
+     */
     @Override
     public List<User> getUserSpendingMoreThan(float mount) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserSpendingMoreThan'");
+        String jpql = "SELECT u FROM User u JOIN u.purchaseList p GROUP BY u HAVING SUM(p.totalPrice) > :amount";
+        return entityManager.createQuery(jpql, User.class)
+                            .setParameter("amount", mount)
+                            .getResultList();
     }
-
+    
+    /**
+     * Obtener los proveedores (Suppliers) que más han estado involucrados en compras (Purchase) a través de los servicios (Service) que ofrecen.
+     */
     @Override
     public List<Supplier> getTopNSuppliersInPurchases(int n) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTopNSuppliersInPurchases'");
+        String jpql = """
+            SELECT s
+            FROM Supplier s
+            JOIN s.services serv
+            JOIN serv.itemServiceList iserv
+            GROUP BY s
+            ORDER BY COUNT(iserv.purchase) DESC
+        """;
+    
+        return entityManager.createQuery(jpql, Supplier.class)
+                            .setMaxResults(n)
+                            .getResultList();
     }
-
+    
+    /**
+     * sumar los precios de todos los ItemService por cada Purchase y devolver las 10 compras con la suma más alta.
+     */
     @Override
     public List<Purchase> getTop10MoreExpensivePurchasesInServices() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTop10MoreExpensivePurchasesInServices'");
+        String jpql = """
+            SELECT p
+            FROM Purchase p
+            JOIN p.itemServiceList i
+            GROUP BY p
+            ORDER BY SUM(i.price) DESC
+        """;
+    
+        return entityManager.createQuery(jpql, Purchase.class)
+                            .setMaxResults(10)
+                            .getResultList();
     }
-
+    
+    /** 
+     * Debe devolver una lista con los 5 usuarios (User) que realizaron más 
+     * compras (Purchase) en el sistema, ordenados de mayor a menor.
+    */
     @Override
     public List<User> getTop5UsersMorePurchases() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTop5UsersMorePurchases'");
+        String jpql = """
+            SELECT p.user
+            FROM Purchase p
+            GROUP BY p.user
+            ORDER BY COUNT(p) DESC
+        """;
+    
+        return entityManager.createQuery(jpql, User.class)
+                            .setMaxResults(5)
+                            .getResultList();
     }
-
+    
+    /**
+     * debe devolver la cantidad total de compras (Purchase) realizadas entre dos fechas dadas (start y end).
+     */
     @Override
     public long getCountOfPurchasesBetweenDates(Date start, Date end) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCountOfPurchasesBetweenDates'");
+        String jpql = """
+            SELECT COUNT(p)
+            FROM Purchase p
+            WHERE p.date BETWEEN :start AND :end
+        """;
+    
+        return entityManager.createQuery(jpql, Long.class)
+                            .setParameter("start", start)
+                            .setParameter("end", end)
+                            .getSingleResult();
     }
-
+    
+    /**
+     * Debe devolver todas las rutas (Route) que incluyan la parada (Stop) dada como parámetro.
+     */
     @Override
     public List<Route> getRoutesWithStop(Stop stop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRoutesWithStop'");
+        String jpql = """
+            SELECT r
+            FROM Route r
+            JOIN r.stops s
+            WHERE s = :stop
+        """;
+    
+        return entityManager.createQuery(jpql, Route.class)
+                            .setParameter("stop", stop)
+                            .getResultList();
     }
-
+    
+    /**
+     * debe devolver la cantidad máxima de paradas (Stop) que tiene alguna ruta (Route).
+     */
     @Override
     public Long getMaxStopOfRoutes() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMaxStopOfRoutes'");
+        String jpql = """
+            SELECT MAX(SIZE(r.stops))
+            FROM Route r
+        """;
+    
+        return entityManager.createQuery(jpql, Long.class)
+                            .getSingleResult();
     }
-
+    
+    /**
+     * debe devolver una lista de todas las rutas (Route) que nunca fueron vendidas, 
+     * es decir, que no tienen ninguna compra (Purchase) asociada.
+     */
     @Override
     public List<Route> getRoutsNotSell() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRoutsNotSell'");
+        String jpql = """
+            SELECT r
+            FROM Route r
+            WHERE r NOT IN (
+                SELECT DISTINCT p.route
+                FROM Purchase p
+            )
+        """;
+    
+        return entityManager.createQuery(jpql, Route.class)
+                            .getResultList();
     }
-
+    
+    /**
+     * debe devolver las 3 rutas (Route) con mayor calificación promedio, considerando las calificaciones 
+     * (Review) asociadas a las compras (Purchase) de cada ruta.
+     */
     @Override
     public List<Route> getTop3RoutesWithMaxRating() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTop3RoutesWithMaxRating'");
+        String jpql = """
+            SELECT p.route
+            FROM Review r
+            JOIN r.purchase p
+            GROUP BY p.route
+            ORDER BY AVG(r.rating) DESC
+        """;
+    
+        return entityManager.createQuery(jpql, Route.class)
+                            .setMaxResults(3)
+                            .getResultList();
     }
+    
 
     @Override
     public Service getMostDemandedService() {

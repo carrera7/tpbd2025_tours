@@ -44,6 +44,21 @@ public class Purchase {
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemService> itemServiceList;
 
+    public Purchase(String code, Route route, User user){
+        this.setCode(code);
+        this.setRoute(route);
+        this.setUser(user);
+        this.date = new Date();
+        this.totalPrice = route.getPrice();
+    }
+
+    public Purchase(String code, Date date, Route route, User user){
+        this.setCode(code);
+        this.setRoute(route);
+        this.setUser(user);
+        this.setDate(date);
+        this.totalPrice = route.getPrice();
+    }
 
     public Long getId() {
         return id;

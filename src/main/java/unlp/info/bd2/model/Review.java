@@ -24,6 +24,11 @@ public class Review {
     @JoinColumn(name="purchase_id",unique=true, nullable = false)
     private Purchase purchase;
 
+    public Review(int rating, String comment, Purchase purchase){
+        this.setRating(rating);
+        this.setComment(comment);
+        this.setPurchase(purchase);
+    }
 
     public Long getId() {
         return id;

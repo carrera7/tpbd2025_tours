@@ -32,6 +32,13 @@ public class ItemService {
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
 
+    public ItemService(Service service, int quantity, Purchase purchase) {
+        this.setService(service);
+        this.setQuantity(quantity);
+        this.setPurchase(purchase);
+    }
+    
+
     public Long getId() {
         return id;
     }

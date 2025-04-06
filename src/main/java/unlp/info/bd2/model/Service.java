@@ -28,7 +28,7 @@ public class Service {
     private String description;
 
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemService> itemServiceList = new ArrayList<>();;
+    private List<ItemService> itemServiceList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "supplier_id",nullable = false) // Esta será la columna FK en la tabla "Service"

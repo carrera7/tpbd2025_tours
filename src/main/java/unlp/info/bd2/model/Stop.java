@@ -21,6 +21,11 @@ public class Stop {
     @Column(name = "description",columnDefinition = "TEXT") // o ajustá según el tipo real
     private String description;
 
+    public Stop(String name, String description) {
+        this.setName(name);
+        this.setDescription(description);
+    }
+
 
     public Long getId() {
         return id;
