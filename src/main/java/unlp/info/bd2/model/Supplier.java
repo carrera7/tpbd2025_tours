@@ -1,5 +1,6 @@
 package unlp.info.bd2.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -9,21 +10,22 @@ import jakarta.persistence.*;
 public class Supplier {
 
     public Supplier(){
-        
+        this.services = new ArrayList<Service>(); // esta bien instanciarlo??
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Suponiendo autoincremental
     private Long id;
     
-    @Column(name="businessName",columnDefinition = "TEXT")
+    @Column(name="businessName",  length = 255, unique = true)
     private String businessName;
 
-    @Column(name="authorizationNumber",columnDefinition = "TEXT")
+    @Column(name="authorizationNumber", unique = true, length = 255)
     private String authorizationNumber;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Service> services;
+
 
     public Long getId() {
         return id;

@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.jms.JmsProperties.Listener.Session
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-
+import unlp.info.bd2.model.DriverUser;
 import unlp.info.bd2.model.Purchase;
 import unlp.info.bd2.model.Route;
 import unlp.info.bd2.model.Service;
