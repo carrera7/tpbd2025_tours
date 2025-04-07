@@ -15,7 +15,6 @@ public class TourGuideUser extends User {
 
     }
 
-
     @Column(name = "education", length = 255)
     private String education;
 

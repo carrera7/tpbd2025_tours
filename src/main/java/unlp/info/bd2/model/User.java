@@ -44,6 +44,17 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Purchase> purchaseList;
 
+    //agrego metodos
+    public User(String username, String password, String fullName, String email, Date birthdate, String phoneNumber) {
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setName(fullName);
+        this.setEmail(email);
+        this.setBirthdate(birthdate);
+        this.setPhoneNumber(phoneNumber);
+        this.active = true; // Por defecto lo seteamos como activo
+        this.purchaseList = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -57,8 +68,10 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String username) { // se pueden modificar los setters y getters???
+        if (this.username == null) {
+            this.username = username;
+        }
     }
 
     public String getPassword() {
@@ -117,16 +130,5 @@ public class User {
         this.active = active;
     }
 
-    //agrego metodos
-    public User(String username, String password, String fullName, String email, Date birthdate, String phoneNumber) {
-        this.setUsername(username);
-        this.setPassword(password);
-        this.setName(name);
-        this.setEmail(email);
-        this.setBirthdate(birthdate);
-        this.setPhoneNumber(phoneNumber);
-        this.active = true; // Por defecto lo seteamos como activo
-        this.purchaseList = new ArrayList<>();
-    }
     
 }

@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -31,9 +30,6 @@ import unlp.info.bd2.utils.ToursException;
 
 @org.springframework.stereotype.Service
 public class ToursServiceImpl implements ToursService{
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     private ToursRepository tourRepository;
 

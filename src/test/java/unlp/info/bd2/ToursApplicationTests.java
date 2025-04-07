@@ -51,7 +51,7 @@ class ToursApplicationTests {
 		this.dyes = cal1.getTime();
 	}
 
-/**
+
 	@Test
 	void createAndGetUserTest()  throws ToursException {
 		User user1 = this.toursService.createUser("user1", "1234", "Usuario Uno", "user1@gmail.com", dob1, "000111222333");
@@ -109,7 +109,7 @@ class ToursApplicationTests {
 		User unmodifiedUserFromDB = opUnmodifiedUserFromDB.get();
 		assertEquals(unmodifiedUserFromDB.getId(), user1.getId());
 	}
-*/
+
 	@Test
 	void createAndGetRoutesAndStopsTest() throws ToursException {
 		Stop stop1 = this.toursService.createStop("Estadio Monumental", "Estadio de River Plate");
@@ -151,7 +151,7 @@ class ToursApplicationTests {
 		assertEquals("Estadios 2", routeFromList.getName());
 	}
 
-	/* 
+
 	@Test
 	void assignWorkersToRoutesTest() throws ToursException {
 		Stop stop1 = this.toursService.createStop("Estadio Monumental", "Estadio de River Plate");
@@ -176,6 +176,7 @@ class ToursApplicationTests {
 		assertThrows(ToursException.class, () -> this.toursService.assignTourGuideByUsername("user_no_existente", tourGuideUser1.getId()) , "No pudo realizarse la asignación");
 		assertThrows(ToursException.class, () -> this.toursService.assignDriverByUsername(driverUser1.getUsername(), 1000000L) , "No pudo realizarse la asignación");
 	}
+
 
 	@Test
 	void createAndGetSupplierAndService() throws ToursException {
@@ -222,7 +223,7 @@ class ToursApplicationTests {
 
 		assertThrows(ToursException.class, () -> this.toursService.updateServicePriceById(100000L, 500f), "No existe el producto");
 	}
-
+ /* 
 	@Test
 	void createAndGetPurchaseTest() throws ToursException {
 		User user1 = this.toursService.createUser("user1", "1234", "Usuario Uno", "user1@gmail.com", dob1, "000111222333");
@@ -281,6 +282,7 @@ class ToursApplicationTests {
 		Optional<Purchase> purchase = this.toursService.getPurchaseByCode("100");
 		assertFalse(purchase.isPresent());
 	}
+*/
 
 	@Test
 	void addReviewToPurchaseTest() throws ToursException {
@@ -300,7 +302,8 @@ class ToursApplicationTests {
 		assertNotNull(purchase.getReview());
 		assertEquals(purchase.getId(), review.getPurchase().getId());
 	}
-
+ 
+/* 
 	@Test
 	void deleteUserTest() throws ToursException {
 		User user1 = this.toursService.createUser("user1", "1234", "Usuario Uno", "user1@gmail.com", dob1, "000111222333");
@@ -330,10 +333,10 @@ class ToursApplicationTests {
 		assertTrue(tourGuideUser.isActive());
 		assertThrows(ToursException.class, () -> this.toursService.deleteUser(tourGuideUser), "El usuario no puede ser desactivado");
 	}
-	*/
+*/
 	@Test
     void testStopFields() {
         Stop stop = new Stop();
 	}
-	
-}
+
+} 
