@@ -283,7 +283,6 @@ public class ToursServiceImpl implements ToursService{
     }
 
     @Override
-    @Transactional
     public Supplier createSupplier(String businessName, String authorizationNumber) throws ToursException {
         try {
             Supplier supplier = new Supplier();

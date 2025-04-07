@@ -17,10 +17,10 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Suponiendo autoincremental
     private Long id;
     
-    @Column(name="businessName",columnDefinition = "TEXT")
+    @Column(name="businessName",  length = 255, unique = true)
     private String businessName;
 
-    @Column(name="authorizationNumber",columnDefinition = "TEXT", unique = true)
+    @Column(name="authorizationNumber", unique = true, length = 255)
     private String authorizationNumber;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
