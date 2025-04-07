@@ -2,8 +2,10 @@ package unlp.info.bd2.services;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -662,22 +664,70 @@ public class ToursServiceImpl implements ToursService{
     }
     
 
+    /**
+     * Devuelve el servicio que fue más veces agregado en compras, es decir, 
+     * el servicio que aparece más frecuentemente en los ítems de servicio (ItemService), 
+     * sin importar cuántas unidades se compraron.
+     */
     @Override
     public Service getMostDemandedService() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMostDemandedService'");
+        String jpql = """
+            SELECT iserv.service
+            FROM ItemService iserv
+            GROUP BY iserv.service
+            ORDER BY COUNT(iserv) DESC
+        """;
+    
+        return entityManager.createQuery(jpql, Service.class)
+                            .setMaxResults(1)
+                            .getSingleResult();
     }
+    
 
+     /**
+     * devuelve una lista con todos los Service que nunca fueron utilizados en una compra, es decir, 
+     * servicios que están registrados en el sistema pero nadie los ha adquirido aún
+     */
     @Override
     public List<Service> getServiceNoAddedToPurchases() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getServiceNoAddedToPurchases'");
+        String jpql = """
+            SELECT s
+            FROM Service s
+            WHERE s NOT IN (
+                SELECT DISTINCT iserv.service
+                FROM ItemService iserv
+            )
+        """;
+    
+        return entityManager.createQuery(jpql, Service.class).getResultList();
     }
-
+    
+    /**
+     * Consulta todas las Review con rating == 1.
+     * Por cada Review, obtiene: La Purchase asociada, la Route asociada a esa compra 
+     * y la lista de TourGuideUser de esa ruta.
+     * Añade todos los guías turísticos a un Set (para evitar duplicados).
+     * Devuelve la lista de guías turísticos sin duplicados.
+     * 
+     * Consultar si esta bien 
+     */
     @Override
     public List<TourGuideUser> getTourGuidesWithRating1() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTourGuidesWithRating1'");
+        // Usamos un set para evitar duplicados
+        Set<TourGuideUser> tourGuidesWithRating1 = new HashSet<>();
+
+        // Obtener todas las reviews con rating 1
+        List<Review> reviews = entityManager
+            .createQuery("SELECT r FROM Review r WHERE r.rating = 1", Review.class)
+            .getResultList();
+
+        for (Review review : reviews) {
+            Route route = review.getPurchase().getRoute();
+            List<TourGuideUser> tourGuides = route.getTourGuideList();
+            tourGuidesWithRating1.addAll(tourGuides);
+        }
+
+        return new ArrayList<>(tourGuidesWithRating1);
     }
 
 }
