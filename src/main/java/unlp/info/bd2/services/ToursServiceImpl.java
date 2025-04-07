@@ -298,28 +298,45 @@ public class ToursServiceImpl implements ToursService{
         }
     }
 
+    // @Override
+    // @Transactional
+    // public Service addServiceToSupplier(String name, float price, String description, Supplier supplier) throws ToursException {
+    //     try {
+    //         // Crear nuevo servicio
+    //         Service service = new Service();
+    //         service.setName(name);
+    //         service.setPrice(price); // Esta validación ya está implementada en el setter
+    //         service.setDescription(description);
+    //         service.setSupplier(supplier);
+    
+    //         // Persistir el servicio
+    //         entityManager.persist(service);
+    
+    //         // Actualizar la lista de servicios del proveedor (si no está null)
+    //         if (supplier.getServices() != null) {
+    //             supplier.getServices().add(service);
+    //         }
+    
+    //         return service;
+    //     } catch (Exception e) {
+    //         throw new ToursException("Error al agregar el servicio '" + name + "' al proveedor con ID: " + supplier.getId() + e);
+    //     }
+    // }
+
     @Override
-    @Transactional
     public Service addServiceToSupplier(String name, float price, String description, Supplier supplier) throws ToursException {
         try {
-            // Crear nuevo servicio
-            Service service = new Service();
-            service.setName(name);
-            service.setPrice(price); // Esta validación ya está implementada en el setter
-            service.setDescription(description);
-            service.setSupplier(supplier);
+            Service service = new Service(name, price, description);
+            service.setSupplier(supplier); // Esto actualiza el lado "muchos"
     
-            // Persistir el servicio
+            // Si la relación es bidireccional y querés mantener sincronía en memoria:
+            supplier.addService(service); // Método helper que encapsula la lógica
+    
             entityManager.persist(service);
-    
-            // Actualizar la lista de servicios del proveedor (si no está null)
-            if (supplier.getServices() != null) {
-                supplier.getServices().add(service);
-            }
-    
             return service;
+    
         } catch (Exception e) {
-            throw new ToursException("Error al agregar el servicio '" + name + "' al proveedor con ID: " + supplier.getId() + e);
+            throw new ToursException("Error al agregar el servicio '" + name + "' al proveedor con ID: " + supplier.getId());
         }
     }
     

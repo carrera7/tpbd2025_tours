@@ -35,6 +35,12 @@ public class Service {
     @JoinColumn(name = "supplier_id",nullable = false) // Esta será la columna FK en la tabla "Service"
     private Supplier supplier;
 
+    public Service(String name, float price, String description) {
+        this.setName(name); // usa setters para mantener validaciones (como el precio)
+        this.setPrice(price);
+        this.setDescription(description);
+        this.itemServiceList = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;

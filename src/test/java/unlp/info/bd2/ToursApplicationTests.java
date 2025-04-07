@@ -261,6 +261,7 @@ class ToursApplicationTests {
 		assertThrows(ToursException.class, () -> this.toursService.createPurchase("200", dyes, route1, user1), "No puede realizarse la compra");
 		assertThrows(ToursException.class, () -> this.toursService.createPurchase("100", route1, user1), "Constraint Violation");
 	}
+ */
 
 	@Test
 	void removePurchaseAndItems() throws ToursException {
@@ -282,7 +283,7 @@ class ToursApplicationTests {
 		Optional<Purchase> purchase = this.toursService.getPurchaseByCode("100");
 		assertFalse(purchase.isPresent());
 	}
-*/
+
 
 	@Test
 	void addReviewToPurchaseTest() throws ToursException {
