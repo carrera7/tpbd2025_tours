@@ -65,19 +65,28 @@ public class ToursQuerysTests {
         assertEquals(0, purchases3.size());
     }
 
-/* 
-//     @Test
-//     void getUserSpendingMoreThanTest() throws ToursException {
-//         List<User> users1 = this.service.getUserSpendingMoreThan(500);
-//         assertEquals(6, users1.size());
-//         this.assertListEquality(users1.stream().map(User::getUsername).collect(Collectors.toList()), Arrays.asList("user3", "user4", "user6", "user7", "user9", "user10"));
-//         List<User> users2 = this.service.getUserSpendingMoreThan(800);
-//         assertEquals(3, users2.size());
-//         this.assertListEquality(users2.stream().map(User::getUsername).collect(Collectors.toList()), Arrays.asList("user4", "user7", "user10"));
-//         List<User> users3 = this.service.getUserSpendingMoreThan(1000);
-//         assertEquals(0, users3.size());
-//     }
 
+    @Test
+    void getUserSpendingMoreThanTest() throws ToursException {
+        List<User> users1 = this.service.getUserSpendingMoreThan(500);
+        assertEquals(6, users1.size());
+        assertEquals(
+            Arrays.asList("user3", "user4", "user6", "user7", "user9", "user10"),
+            users1.stream().map(User::getUsername).collect(Collectors.toList())
+        );
+        //this.assertListEquality(users1.stream().map(User::getUsername).collect(Collectors.toList()), Arrays.asList("user3", "user4", "user6", "user7", "user9", "user10"));
+        List<User> users2 = this.service.getUserSpendingMoreThan(800);
+        assertEquals(3, users2.size());
+        assertEquals(
+                    Arrays.asList("user4", "user7", "user10"),
+                    users2.stream().map(User::getUsername).collect(Collectors.toList())
+                );
+        //this.assertListEquality(users2.stream().map(User::getUsername).collect(Collectors.toList()), Arrays.asList("user4", "user7", "user10"));
+        List<User> users3 = this.service.getUserSpendingMoreThan(1000);
+        assertEquals(0, users3.size());
+    }
+
+/* 
 //     @Test
 //     void getTopNSuppliersInPurchasesTest() throws ToursException {
 //         List<Supplier> suppliers1 = this.service.getTopNSuppliersInPurchases(3);
