@@ -41,7 +41,8 @@ public class User {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    //fetch = FetchType.LAZY ?
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Purchase> purchaseList;
 
     //agrego metodos

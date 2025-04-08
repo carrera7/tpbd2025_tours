@@ -52,67 +52,7 @@ public class ToursQuerysTests {
     void init() {
 
     }
-/* 
-//     @Test
-//     void getAllPurchasesOfUsernameTest() throws ToursException {
-//         List<Purchase> purchases1 = this.service.getAllPurchasesOfUsername("user1");
-//         assertEquals(6, purchases1.size());
-//         this.assertListEquality(purchases1.stream().map(Purchase::getCode).collect(Collectors.toList()), Arrays.asList("P001", "P005","P009", "P011", "P015", "P019"));
-//         List<Purchase> purchases2 = this.service.getAllPurchasesOfUsername("user3");
-//         assertEquals(1, purchases2.size());
-//         this.assertListEquality(purchases2.stream().map(Purchase::getCode).collect(Collectors.toList()), Arrays.asList("P003"));
-//         List<Purchase> purchases3 = this.service.getAllPurchasesOfUsername("user5");
-//         assertEquals(0, purchases3.size());
-//     }
-
-//     @Test
-//     void getUserSpendingMoreThanTest() throws ToursException {
-//         List<User> users1 = this.service.getUserSpendingMoreThan(500);
-//         assertEquals(6, users1.size());
-//         this.assertListEquality(users1.stream().map(User::getUsername).collect(Collectors.toList()), Arrays.asList("user3", "user4", "user6", "user7", "user9", "user10"));
-//         List<User> users2 = this.service.getUserSpendingMoreThan(800);
-//         assertEquals(3, users2.size());
-//         this.assertListEquality(users2.stream().map(User::getUsername).collect(Collectors.toList()), Arrays.asList("user4", "user7", "user10"));
-//         List<User> users3 = this.service.getUserSpendingMoreThan(1000);
-//         assertEquals(0, users3.size());
-//     }
-
-//     @Test
-//     void getTopNSuppliersInPurchasesTest() throws ToursException {
-//         List<Supplier> suppliers1 = this.service.getTopNSuppliersInPurchases(3);
-//         assertEquals(3, suppliers1.size());
-//         this.assertListEquality(suppliers1.stream().map(Supplier::getAuthorizationNumber).collect(Collectors.toList()), Arrays.asList("12345", "54321", "67890"));
-//         List<Supplier> suppliers2 = this.service.getTopNSuppliersInPurchases(1);
-//         assertEquals(1, suppliers2.size());
-//         this.assertListEquality(suppliers2.stream().map(Supplier::getAuthorizationNumber).collect(Collectors.toList()), Arrays.asList("12345"));
-//     }
-
-//     @Test
-//     void getTop10MoreExpensivePurchasesInServicesTest() throws ToursException {
-//         List<Purchase> purchases = this.service.getTop10MoreExpensivePurchasesInServices();
-//         assertEquals(10, purchases.size());
-//         this.assertListEquality(purchases.stream().map(Purchase::getCode).collect(Collectors.toList()), Arrays.asList("P004", "P007", "P008", "P010", "P012", "P013", "P014", "P017", "P018", "P020"));
-//     }
-
-//     @Test
-//     void getTop5UsersMorePurchasesTest() throws ToursException {
-//         List<User> usersMorePurchases = this.service.getTop5UsersMorePurchases();
-//         assertEquals(5, usersMorePurchases.size());
-//         this.assertListEquality(usersMorePurchases.stream().map(User::getUsername).collect(Collectors.toList()), Arrays.asList("user1", "user2", "user6", "user7", "user10"));
-//     }
-
-//     @Test
-//     void getCountOfPurchasesBetweenDatesTest() throws ToursException {
-//         LocalDate today = LocalDate.now();
-//         long countOfPurchasesBetweenDates1 = this.service.getCountOfPurchasesBetweenDates(Date.valueOf(today.minusDays(25)), Date.valueOf(today.minusDays(15)));
-//         assertEquals(7, countOfPurchasesBetweenDates1);
-//         long countOfPurchasesBetweenDates2 = this.service.getCountOfPurchasesBetweenDates(Date.valueOf(today.minusDays(13)), Date.valueOf(today.minusDays(0)));
-//         assertEquals(7, countOfPurchasesBetweenDates2);
-//         long countOfPurchasesBetweenDates3 = this.service.getCountOfPurchasesBetweenDates(Date.valueOf(today.minusDays(26)), Date.valueOf(today.minusDays(22)));
-//         assertEquals(0, countOfPurchasesBetweenDates3);
-//     }
-
-*/
+    
     @Test
     void getRoutesWithStopTest() throws ToursException {
         Stop stop1 = this.service.getStopByNameStart("Diagonal Norte").get(0);
