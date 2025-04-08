@@ -14,10 +14,10 @@ import jakarta.persistence.ManyToMany;
 @DiscriminatorValue("DRIVER") // Solo si estás usando herencia con SINGLE_TABLE
 public class DriverUser extends User {
 
-    public DriverUser(){    
+    public DriverUser(){    // analizar caso por caso que tipo de cascada en cada caso usar. mismo caso para el fetch
     }
 
-    @Column(name = "expedient", length = 100, nullable = false, columnDefinition = "VARCHAR(100) DEFAULT 'SIN_EXPEDIENTE'" )
+    @Column(name = "expedient", length = 100, nullable = true, columnDefinition = "VARCHAR(100) DEFAULT 'SIN_EXPEDIENTE'" )
     private String expedient;
 
     @ManyToMany(mappedBy = "driverList")

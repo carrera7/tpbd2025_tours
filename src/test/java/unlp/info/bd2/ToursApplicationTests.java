@@ -223,7 +223,8 @@ class ToursApplicationTests {
 
 		assertThrows(ToursException.class, () -> this.toursService.updateServicePriceById(100000L, 500f), "No existe el producto");
 	}
- /* 
+
+	/* 
 	@Test
 	void createAndGetPurchaseTest() throws ToursException {
 		User user1 = this.toursService.createUser("user1", "1234", "Usuario Uno", "user1@gmail.com", dob1, "000111222333");
@@ -303,7 +304,7 @@ class ToursApplicationTests {
 		assertNotNull(purchase.getReview());
 		assertEquals(purchase.getId(), review.getPurchase().getId());
 	}
- 
+
 /* 
 	@Test
 	void deleteUserTest() throws ToursException {

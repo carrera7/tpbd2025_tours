@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING) // hay que darle un valor discrimidado que no sea el por defectp
 public class User {
 
     public User(){
@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
-    @Column(name = "username", length = 100, unique = true, nullable = false)
+    @Column(name = "username", length = 100, unique = true, nullable = false, updatable=false)
     private String username;
 
     @Column(name = "password", length = 100, nullable = false)
@@ -68,10 +68,8 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) { // se pueden modificar los setters y getters???
-        if (this.username == null) {
-            this.username = username;
-        }
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
