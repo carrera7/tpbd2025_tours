@@ -6,14 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Iterator;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import unlp.info.bd2.model.DriverUser;
 import unlp.info.bd2.model.ItemService;
@@ -27,6 +26,8 @@ import unlp.info.bd2.model.TourGuideUser;
 import unlp.info.bd2.model.User;
 import unlp.info.bd2.repositories.ToursRepository;
 import unlp.info.bd2.utils.ToursException;
+
+
 
 @org.springframework.stereotype.Service
 public class ToursServiceImpl implements ToursService{
@@ -344,8 +345,8 @@ public class ToursServiceImpl implements ToursService{
     
             // Si la relación es bidireccional y querés mantener sincronía en memoria:
             supplier.addService(service); // Método helper que encapsula la lógica
-    
-            entityManager.persist(service);
+            Session session = sessionFactory.getCurrentSession();
+            session.persist(service); 
             return service;
     
         } catch (Exception e) {
@@ -472,6 +473,9 @@ public class ToursServiceImpl implements ToursService{
             // Crear el nuevo ItemService
             ItemService item = new ItemService(service, quantity, purchase);
 
+            service.getItemServiceList().add(item);
+            purchase.getItemServiceList().add(item); 
+
             // Actualizar el precio total de la compra
             float additionalCost = service.getPrice() * quantity;
             purchase.setTotalPrice(purchase.getTotalPrice() + additionalCost);
@@ -502,10 +506,10 @@ public class ToursServiceImpl implements ToursService{
     }
     
     
-    /**
+    /*
      * es parte de una expresión condicional ternaria, que es una forma compacta de escribir un if-else. Su estructura es:
      * condición ? valor_si_verdadero : valor_si_falso;
-     */
+        */
     @Override
     @Transactional
     public void deletePurchase(Purchase purchase) throws ToursException {
@@ -514,13 +518,29 @@ public class ToursServiceImpl implements ToursService{
 
             Purchase managedPurchase = session.contains(purchase)
                 ? purchase
-                : session.merge(purchase); // aseguramos que está gestionado
+                : session.merge(purchase);
+
+            // Evitamos ConcurrentModification
+            Iterator<ItemService> iterator = managedPurchase.getItemServiceList().iterator();
+            while (iterator.hasNext()) {
+                ItemService item = iterator.next();
+                iterator.remove();                      
+                item.setPurchase(null);           
+                item.getService().getItemServiceList().remove(item); 
+                session.remove(item);           
+            }
+
+            session.flush();
 
             session.remove(managedPurchase);
+
         } catch (Exception e) {
             throw new ToursException("Error al eliminar la compra con código: " + purchase.getCode() + " error: " + e);
         }
     }
+
+
+
 
     @Override
     @Transactional

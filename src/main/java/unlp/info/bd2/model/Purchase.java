@@ -2,6 +2,7 @@ package unlp.info.bd2.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 import jakarta.persistence.*;
 
 @Entity
@@ -42,7 +43,7 @@ public class Purchase {
 
     // Relación con ItemService
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemService> itemServiceList;
+    private List<ItemService> itemServiceList =  new ArrayList<>();;
 
     public Purchase(String code, Route route, User user){
         this.setCode(code);

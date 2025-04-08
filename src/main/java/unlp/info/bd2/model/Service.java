@@ -28,7 +28,7 @@ public class Service {
     @Column(name="description",columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)// CONSULTAR SI ES MEJOR PERSIST MERGE?
     private List<ItemService> itemServiceList = new ArrayList<>();
 
     @ManyToOne
