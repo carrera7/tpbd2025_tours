@@ -584,14 +584,19 @@ public class ToursServiceImpl implements ToursService{
      */
     @Override
     @Transactional
-    public List<User> getUserSpendingMoreThan(float mount) {
+    public List<User> getUserSpendingMoreThan(float amount) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "SELECT u FROM User u JOIN u.purchaseList p GROUP BY u HAVING SUM(p.totalPrice) > :amount";
+        String hql = "SELECT u " +
+                    "FROM User u " +
+                    "JOIN u.purchaseList p " +
+                    "WHERE p.totalPrice > 0 " + 
+                    "GROUP BY u " +
+                    "HAVING SUM(p.totalPrice) > :amount " +
+                    "ORDER BY u.username";
         return session.createQuery(hql, User.class)
-                    .setParameter("amount", mount)
+                    .setParameter("amount", amount)
                     .getResultList();
     }
-
     
     /**
      * Obtener los proveedores (Suppliers) que más han estado involucrados en compras (Purchase) a través de los servicios (Service) que ofrecen.
