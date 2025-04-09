@@ -703,14 +703,14 @@ public class ToursServiceImpl implements ToursService{
      */
     @Override
     @Transactional
-    public Integer getMaxStopOfRoutes() {
+    public Long getMaxStopOfRoutes() {
         Session session = sessionFactory.getCurrentSession();
         String hql = """
             SELECT MAX(SIZE(r.stops))
             FROM Route r
         """;
     
-        return session.createQuery(hql, Integer.class)
+        return session.createQuery(hql, Long.class)
                       .getSingleResult();
     }
     
