@@ -28,13 +28,19 @@ public class Service {
     @Column(name="description",columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)// CONSULTAR SI ES MEJOR PERSIST MERGE?
     private List<ItemService> itemServiceList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "supplier_id",nullable = false) // Esta será la columna FK en la tabla "Service"
     private Supplier supplier;
 
+    public Service(String name, float price, String description) {
+        this.setName(name); // usa setters para mantener validaciones (como el precio)
+        this.setPrice(price);
+        this.setDescription(description);
+        this.itemServiceList = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;

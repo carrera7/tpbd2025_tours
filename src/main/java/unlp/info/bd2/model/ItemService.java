@@ -31,7 +31,7 @@ public class ItemService {
      * simula la composición: si se elimina un Purchase, se eliminan sus ItemService. 
      * */
     // Relación Muchos a Uno con Purchase (composición: Purchase tiene muchos ItemService)
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "purchase_id", nullable = false)
     private Purchase purchase;
 

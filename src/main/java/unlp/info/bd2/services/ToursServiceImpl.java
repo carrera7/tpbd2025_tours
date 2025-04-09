@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Iterator;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,6 +26,8 @@ import unlp.info.bd2.model.TourGuideUser;
 import unlp.info.bd2.model.User;
 import unlp.info.bd2.repositories.ToursRepository;
 import unlp.info.bd2.utils.ToursException;
+
+
 
 @org.springframework.stereotype.Service
 public class ToursServiceImpl implements ToursService{
@@ -309,29 +312,43 @@ public class ToursServiceImpl implements ToursService{
         }
     }
 
+    // @Override
+    // @Transactional
+    // public Service addServiceToSupplier(String name, float price, String description, Supplier supplier) throws ToursException {
+    //     try {
+    //         // Crear nuevo servicio
+    //         Service service = new Service();
+    //         service.setName(name);
+    //         service.setPrice(price); // Esta validación ya está implementada en el setter
+    //         service.setDescription(description);
+    //         service.setSupplier(supplier);
+    
+    //         // Persistir el servicio
+    //         entityManager.persist(service);
+    
+    //         // Actualizar la lista de servicios del proveedor (si no está null)
+    //         if (supplier.getServices() != null) {
+    //             supplier.getServices().add(service);
+    //         }
+    
+    //         return service;
+    //     } catch (Exception e) {
+    //         throw new ToursException("Error al agregar el servicio '" + name + "' al proveedor con ID: " + supplier.getId() + e);
+    //     }
+    // }
 
     @Override
-    @Transactional
     public Service addServiceToSupplier(String name, float price, String description, Supplier supplier) throws ToursException {
         try {
+            Service service = new Service(name, price, description);
+            service.setSupplier(supplier); // Esto actualiza el lado "muchos"
+    
+            // Si la relación es bidireccional y querés mantener sincronía en memoria:
+            supplier.addService(service); // Método helper que encapsula la lógica
             Session session = sessionFactory.getCurrentSession();
-    
-            // Crear nuevo servicio
-            Service service = new Service();
-            service.setName(name);
-            service.setPrice(price); // Validación en setter
-            service.setDescription(description);
-            service.setSupplier(supplier);
-    
-            // Persistir el servicio
-            session.persist(service);
-    
-            // Asegurar que la relación sea bidireccional
-            if (supplier.getServices() != null) {
-                supplier.getServices().add(service);
-            }
-    
+            session.persist(service); 
             return service;
+    
         } catch (Exception e) {
             throw new ToursException("Error alfetch = FetchType.LAZY agregar el servicio '" + name + "' al proveedor con ID: " + supplier.getId() + " - " + e.getMessage());
         }
@@ -454,6 +471,9 @@ public class ToursServiceImpl implements ToursService{
             // Crear el nuevo ItemService
             ItemService item = new ItemService(service, quantity, purchase);
 
+            service.getItemServiceList().add(item);
+            purchase.getItemServiceList().add(item); 
+
             // Actualizar el precio total de la compra
             float additionalCost = service.getPrice() * quantity;
             purchase.setTotalPrice(purchase.getTotalPrice() + additionalCost);
@@ -486,10 +506,10 @@ public class ToursServiceImpl implements ToursService{
     }
     
     
-    /**
+    /*
      * es parte de una expresión condicional ternaria, que es una forma compacta de escribir un if-else. Su estructura es:
      * condición ? valor_si_verdadero : valor_si_falso;
-     */
+        */
     @Override
     @Transactional
     public void deletePurchase(Purchase purchase) throws ToursException {
@@ -498,13 +518,29 @@ public class ToursServiceImpl implements ToursService{
 
             Purchase managedPurchase = session.contains(purchase)
                 ? purchase
-                : session.merge(purchase); // aseguramos que está gestionado
+                : session.merge(purchase);
+
+            // Evitamos ConcurrentModification
+            Iterator<ItemService> iterator = managedPurchase.getItemServiceList().iterator();
+            while (iterator.hasNext()) {
+                ItemService item = iterator.next();
+                iterator.remove();                      
+                item.setPurchase(null);           
+                item.getService().getItemServiceList().remove(item); 
+                session.remove(item);           
+            }
+
+            session.flush();
 
             session.remove(managedPurchase);
+
         } catch (Exception e) {
             throw new ToursException("Error al eliminar la compra con código: " + purchase.getCode() + " error: " + e);
         }
     }
+
+
+
 
     @Override
     @Transactional
