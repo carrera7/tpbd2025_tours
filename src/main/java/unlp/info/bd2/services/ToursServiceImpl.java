@@ -3,10 +3,10 @@ package unlp.info.bd2.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.Iterator;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -136,16 +136,36 @@ public class ToursServiceImpl implements ToursService{
     @Transactional
     public void deleteUser(User user) throws ToursException {
         try {
-            User managedUser = sessionFactory.getCurrentSession().contains(user)
+            Session session = sessionFactory.getCurrentSession();
+            User managedUser = session.contains(user)
                 ? user
-                : (User) sessionFactory.getCurrentSession().merge(user);
-            
-            sessionFactory.getCurrentSession().remove(managedUser);
+                : (User) session.merge(user);
+
+            // Si ya está desactivado, lanzar excepción
+            if (!managedUser.isActive()) {
+                throw new ToursException("El usuario se encuentra desactivado");
+            }
+
+            // Si es TourGuideUser, no se puede desactivar ni eliminar
+            if (managedUser instanceof TourGuideUser || managedUser instanceof DriverUser) {
+                throw new ToursException("El usuario no puede ser desactivado");
+            }
+
+            // Si tiene compras => solo desactivar
+            if (!managedUser.getPurchaseList().isEmpty()) {
+                managedUser.setActive(false);
+                //session.update(managedUser);
+            } else {
+                // &Si no tiene compras, eliminar
+                session.remove(managedUser);
+            }
+
+        } catch (ToursException e) {
+            throw e;
         } catch (Exception e) {
             throw new ToursException("Error al eliminar el usuario con ID: " + user.getId());
         }
     }
-    
 
     @Override
     @Transactional
