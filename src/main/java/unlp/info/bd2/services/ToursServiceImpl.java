@@ -478,8 +478,6 @@ public class ToursServiceImpl implements ToursService{
             float additionalCost = service.getPrice() * quantity;
             purchase.setTotalPrice(purchase.getTotalPrice() + additionalCost);
 
-            purchase.getItemServiceList().add(item);
-
             // Persistir el ItemService
             session.persist(item);
 
