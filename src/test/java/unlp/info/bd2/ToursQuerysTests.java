@@ -1,10 +1,6 @@
 package unlp.info.bd2;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -14,14 +10,21 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
-
 import unlp.info.bd2.config.AppConfig;
 import unlp.info.bd2.config.HibernateConfiguration;
-import unlp.info.bd2.model.Route;
-import unlp.info.bd2.model.Stop;
+import unlp.info.bd2.model.*;
 import unlp.info.bd2.services.ToursService;
 import unlp.info.bd2.utils.DBInitializer;
 import unlp.info.bd2.utils.ToursException;
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
