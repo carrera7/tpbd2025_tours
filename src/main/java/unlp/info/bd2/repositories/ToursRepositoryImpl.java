@@ -32,7 +32,7 @@ public class ToursRepositoryImpl implements ToursRepository{
 
     @Override
     public <T> T save(T o) {
-        session.getCurrentSession().save(o);
+        session.getCurrentSession().persist(o);
         return o;
     }
 
@@ -321,6 +321,17 @@ public class ToursRepositoryImpl implements ToursRepository{
         return currentSession.createQuery(hql, Route.class)
                              .setParameter("stop", stop)
                              .getResultList();
+    }
+
+    @Override
+    @Transactional
+    public Optional<User> findByUsername(String username) {
+        String hql = "FROM User u WHERE u.username = :username";
+        List<User> result = session.getCurrentSession().createQuery(hql, User.class)
+                              .setParameter("username", username)
+                              .getResultList();
+
+        return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
     }
 
 }

@@ -3,7 +3,6 @@ package unlp.info.bd2.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -60,8 +59,8 @@ public class ToursServiceImpl implements ToursService{
             String phoneNumber, String expedient) throws ToursException {
         try {
             DriverUser driverUser = new DriverUser(username, password, fullName, email, birthdate, phoneNumber, expedient);
-            sessionFactory.getCurrentSession().persist(driverUser);
-            return driverUser;
+            DriverUser createdDriverUser =this.tourRepository.save(driverUser);
+            return createdDriverUser;
         } catch (Exception e) {
             throw new ToursException("Error al crear y persistir DriverUser: " + e.getMessage());
         }
@@ -73,8 +72,8 @@ public class ToursServiceImpl implements ToursService{
             Date birthdate, String phoneNumber, String education) throws ToursException {
         try {
             TourGuideUser tourGuideUser = new TourGuideUser(username, password, fullName, email, birthdate, phoneNumber, education);
-            sessionFactory.getCurrentSession().persist(tourGuideUser);
-            return tourGuideUser;
+            TourGuideUser createdTourGuideUser = this.tourRepository.save(tourGuideUser);
+            return createdTourGuideUser;
         } catch (Exception e) {
             throw new ToursException("Error al crear y persistir TourGuideUser: " + e.getMessage());
         }
@@ -95,13 +94,7 @@ public class ToursServiceImpl implements ToursService{
     @Transactional
     public Optional<User> getUserByUsername(String username) throws ToursException {
         try {
-            String hql = "FROM User u WHERE u.username = :username";
-            List<User> result = sessionFactory.getCurrentSession()
-                .createQuery(hql, User.class)
-                .setParameter("username", username)
-                .getResultList();
-    
-            return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
+            return this.tourRepository.findByUsername(username);
         } catch (Exception e) {
             throw new ToursException("Error al obtener usuario por nombre de usuario: " + username);
         }

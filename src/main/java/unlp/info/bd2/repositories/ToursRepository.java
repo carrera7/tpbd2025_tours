@@ -10,6 +10,7 @@ import unlp.info.bd2.model.Stop;
 import unlp.info.bd2.model.Supplier;
 import unlp.info.bd2.model.TourGuideUser;
 import unlp.info.bd2.model.User;
+import unlp.info.bd2.model.*;
 
 public interface ToursRepository {
 
@@ -32,4 +33,5 @@ public interface ToursRepository {
     List<Route> findRoutesBelowPrice(float price);
     List<Route> findRoutesWithStop(Stop stop);
     Integer getMaxStopCountOfRoutes();
+    Optional<User> findByUsername(String username);
 }
