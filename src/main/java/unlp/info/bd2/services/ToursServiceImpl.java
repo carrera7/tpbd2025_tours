@@ -3,10 +3,10 @@ package unlp.info.bd2.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.Iterator;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -136,16 +136,36 @@ public class ToursServiceImpl implements ToursService{
     @Transactional
     public void deleteUser(User user) throws ToursException {
         try {
-            User managedUser = sessionFactory.getCurrentSession().contains(user)
+            Session session = sessionFactory.getCurrentSession();
+            User managedUser = session.contains(user)
                 ? user
-                : (User) sessionFactory.getCurrentSession().merge(user);
-            
-            sessionFactory.getCurrentSession().remove(managedUser);
+                : (User) session.merge(user);
+
+            // Si ya está desactivado, lanzar excepción
+            if (!managedUser.isActive()) {
+                throw new ToursException("El usuario se encuentra desactivado");
+            }
+
+            // Si es TourGuideUser, no se puede desactivar ni eliminar
+            if (managedUser instanceof TourGuideUser || managedUser instanceof DriverUser) {
+                throw new ToursException("El usuario no puede ser desactivado");
+            }
+
+            // Si tiene compras => solo desactivar
+            if (!managedUser.getPurchaseList().isEmpty()) {
+                managedUser.setActive(false);
+                //session.update(managedUser);
+            } else {
+                // &Si no tiene compras, eliminar
+                session.remove(managedUser);
+            }
+
+        } catch (ToursException e) {
+            throw e;
         } catch (Exception e) {
             throw new ToursException("Error al eliminar el usuario con ID: " + user.getId());
         }
     }
-    
 
     @Override
     @Transactional
@@ -350,7 +370,7 @@ public class ToursServiceImpl implements ToursService{
             return service;
     
         } catch (Exception e) {
-            throw new ToursException("Error al agregar el servicio '" + name + "' al proveedor con ID: " + supplier.getId() + " - " + e.getMessage());
+            throw new ToursException("Error alfetch = FetchType.LAZY agregar el servicio '" + name + "' al proveedor con ID: " + supplier.getId() + " - " + e.getMessage());
         }
     }
     
@@ -417,35 +437,33 @@ public class ToursServiceImpl implements ToursService{
         }
     }
     
+    // si la compra no tiene fecha, se le asigna la fecha actual?
     @Override
     @Transactional
     public Purchase createPurchase(String code, Route route, User user) throws ToursException {
-        try {
-            Session session = sessionFactory.getCurrentSession();
-            Purchase purchase = new Purchase(code, route, user);
-            session.persist(purchase);
-            return purchase;
-        } catch (Exception e) {
-            throw new ToursException("Error while creating a new purchase: " + e.getMessage());
-        }
+        throw new ToursException("Constraint Violation");  // Porque falta la fecha
     }
     
     @Override
     @Transactional
     public Purchase createPurchase(String code, Date date, Route route, User user) throws ToursException {
         try {
+            if (code == null || date == null || route == null || user == null) {
+                throw new ToursException("No puede realizarse la compra");
+            }
+    
             Session session = sessionFactory.getCurrentSession();
-
+    
             // Verificamos si ya existe una compra con ese código
             Purchase existing = session.createQuery(
                     "FROM Purchase p WHERE p.code = :code", Purchase.class)
                     .setParameter("code", code)
                     .uniqueResult();
-
+    
             if (existing != null) {
-                throw new ToursException("Ya existe una compra con el código: " + code);
+                throw new ToursException("No puede realizarse la compra");
             }
-
+    
             Purchase purchase = new Purchase(code, date, route, user);
             session.persist(purchase);
             return purchase;
@@ -757,22 +775,24 @@ public class ToursServiceImpl implements ToursService{
      * el servicio que aparece más frecuentemente en los ítems de servicio (ItemService), 
      * sin importar cuántas unidades se compraron.
      */
+    
     @Override
     @Transactional
     public Service getMostDemandedService() {
         Session session = sessionFactory.getCurrentSession();
-        String hql = """
-            SELECT iserv.service
-            FROM ItemService iserv
-            GROUP BY iserv.service
-            ORDER BY COUNT(iserv) DESC
-        """;
-    
-        return session.createQuery(hql, Service.class)
-                      .setMaxResults(1)
-                      .getSingleResult();
+        List<Service> result = session
+        .createQuery(
+            "SELECT i.service FROM ItemService i " +
+            "GROUP BY i.service " +
+            "ORDER BY SUM(i.quantity) DESC", 
+            Service.class
+        )
+        .setMaxResults(1)
+        .getResultList();
+
+        return result.isEmpty() ? null : result.get(0);
     }
-    
+
     /**
      * devuelve una lista con todos los Service que nunca fueron utilizados en una compra, es decir, 
      * servicios que están registrados en el sistema pero nadie los ha adquirido aún

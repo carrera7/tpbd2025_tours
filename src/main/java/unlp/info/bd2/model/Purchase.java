@@ -1,5 +1,6 @@
 package unlp.info.bd2.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
@@ -42,16 +43,8 @@ public class Purchase {
     private Review review;
 
     // Relación con ItemService
-    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemService> itemServiceList =  new ArrayList<>();;
-
-    public Purchase(String code, Route route, User user){
-        this.setCode(code);
-        this.setRoute(route);
-        this.setUser(user);
-        this.date = new Date();
-        this.totalPrice = route.getPrice();
-    }
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<ItemService> itemServiceList = new ArrayList<>();
 
     public Purchase(String code, Date date, Route route, User user){
         this.setCode(code);
@@ -99,6 +92,7 @@ public class Purchase {
 
     public void setUser(User user) {
         this.user = user;
+        user.getPurchaseList().add(this);
     }
 
     public Route getRoute() {

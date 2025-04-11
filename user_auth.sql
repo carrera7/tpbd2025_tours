@@ -1,0 +1,3 @@
+CREATE USER IF NOT EXISTS 'grupo8'@'localhost' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON *.* TO 'grupo8'@'localhost';
+FLUSH PRIVILEGES;
