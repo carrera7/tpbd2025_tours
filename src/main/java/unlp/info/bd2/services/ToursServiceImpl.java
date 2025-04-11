@@ -3,7 +3,6 @@ package unlp.info.bd2.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -47,8 +46,8 @@ public class ToursServiceImpl implements ToursService{
             String phoneNumber) throws ToursException {
         try {
             User user = new User(username, password, fullName, email, birthdate, phoneNumber);
-            sessionFactory.getCurrentSession().persist(user);
-            return user;
+            User created_user =this.tourRepository.save(user);
+            return created_user;
         } catch (Exception e) {
             throw new ToursException("Error al crear y persistir User: " + e.getMessage());
         }
@@ -60,8 +59,8 @@ public class ToursServiceImpl implements ToursService{
             String phoneNumber, String expedient) throws ToursException {
         try {
             DriverUser driverUser = new DriverUser(username, password, fullName, email, birthdate, phoneNumber, expedient);
-            sessionFactory.getCurrentSession().persist(driverUser);
-            return driverUser;
+            DriverUser createdDriverUser =this.tourRepository.save(driverUser);
+            return createdDriverUser;
         } catch (Exception e) {
             throw new ToursException("Error al crear y persistir DriverUser: " + e.getMessage());
         }
@@ -73,8 +72,8 @@ public class ToursServiceImpl implements ToursService{
             Date birthdate, String phoneNumber, String education) throws ToursException {
         try {
             TourGuideUser tourGuideUser = new TourGuideUser(username, password, fullName, email, birthdate, phoneNumber, education);
-            sessionFactory.getCurrentSession().persist(tourGuideUser);
-            return tourGuideUser;
+            TourGuideUser createdTourGuideUser = this.tourRepository.save(tourGuideUser);
+            return createdTourGuideUser;
         } catch (Exception e) {
             throw new ToursException("Error al crear y persistir TourGuideUser: " + e.getMessage());
         }
@@ -95,13 +94,7 @@ public class ToursServiceImpl implements ToursService{
     @Transactional
     public Optional<User> getUserByUsername(String username) throws ToursException {
         try {
-            String hql = "FROM User u WHERE u.username = :username";
-            List<User> result = sessionFactory.getCurrentSession()
-                .createQuery(hql, User.class)
-                .setParameter("username", username)
-                .getResultList();
-    
-            return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
+            return this.tourRepository.findByUsername(username);
         } catch (Exception e) {
             throw new ToursException("Error al obtener usuario por nombre de usuario: " + username);
         }
@@ -201,7 +194,6 @@ public class ToursServiceImpl implements ToursService{
     
         try {
             Route route = new Route(name, price, totalKm, maxNumberOfUsers, stops);
-            route.setStops(stops); // por si el constructor no lo hace
             sessionFactory.getCurrentSession().persist(route);
             return route;
         } catch (Exception e) {
@@ -533,24 +525,7 @@ public class ToursServiceImpl implements ToursService{
     public void deletePurchase(Purchase purchase) throws ToursException {
         try {
             Session session = sessionFactory.getCurrentSession();
-
-            Purchase managedPurchase = session.contains(purchase)
-                ? purchase
-                : session.merge(purchase);
-
-            // Evitamos ConcurrentModification
-            Iterator<ItemService> iterator = managedPurchase.getItemServiceList().iterator();
-            while (iterator.hasNext()) {
-                ItemService item = iterator.next();
-                iterator.remove();                      
-                item.setPurchase(null);           
-                item.getService().getItemServiceList().remove(item); 
-                session.remove(item);           
-            }
-
-            session.flush();
-
-            session.remove(managedPurchase);
+            session.remove(purchase);
 
         } catch (Exception e) {
             throw new ToursException("Error al eliminar la compra con código: " + purchase.getCode() + " error: " + e);
@@ -602,14 +577,19 @@ public class ToursServiceImpl implements ToursService{
      */
     @Override
     @Transactional
-    public List<User> getUserSpendingMoreThan(float mount) {
+    public List<User> getUserSpendingMoreThan(float amount) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "SELECT u FROM User u JOIN u.purchaseList p GROUP BY u HAVING SUM(p.totalPrice) > :amount";
+        String hql = "SELECT u " +
+                    "FROM User u " +
+                    "JOIN u.purchaseList p " +
+                    "WHERE p.totalPrice > 0 " + 
+                    "GROUP BY u " +
+                    "HAVING SUM(p.totalPrice) > :amount " +
+                    "ORDER BY u.username";
         return session.createQuery(hql, User.class)
-                    .setParameter("amount", mount)
+                    .setParameter("amount", amount)
                     .getResultList();
     }
-
     
     /**
      * Obtener los proveedores (Suppliers) que más han estado involucrados en compras (Purchase) a través de los servicios (Service) que ofrecen.
@@ -716,15 +696,9 @@ public class ToursServiceImpl implements ToursService{
      */
     @Override
     @Transactional
-    public Integer getMaxStopOfRoutes() {
-        Session session = sessionFactory.getCurrentSession();
-        String hql = """
-            SELECT MAX(SIZE(r.stops))
-            FROM Route r
-        """;
-    
-        return session.createQuery(hql, Integer.class)
-                      .getSingleResult();
+    public Long getMaxStopOfRoutes() {
+        Integer result = this.tourRepository.getMaxStopCountOfRoutes();
+        return result != null ? result.longValue() : 0L;
     }
     
     /**

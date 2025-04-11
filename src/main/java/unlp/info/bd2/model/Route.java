@@ -31,9 +31,9 @@ public class Route {
 
     @ManyToMany(fetch = FetchType.LAZY) // o EAGER si realmente se usa siempre
     @JoinTable(
-        name = "route_stop",
-        joinColumns = @JoinColumn(name = "route_id"),
-        inverseJoinColumns = @JoinColumn(name = "stop_id")
+        name = "route_stop", 
+        joinColumns = @JoinColumn(name = "route_id"), 
+        inverseJoinColumns = @JoinColumn(name = "stop_id") 
     )
     private List<Stop> stops = new ArrayList<>();
 

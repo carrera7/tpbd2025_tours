@@ -10,6 +10,7 @@ import unlp.info.bd2.model.Stop;
 import unlp.info.bd2.model.Supplier;
 import unlp.info.bd2.model.TourGuideUser;
 import unlp.info.bd2.model.User;
+import unlp.info.bd2.model.*;
 
 public interface ToursRepository {
 
@@ -21,7 +22,6 @@ public interface ToursRepository {
     List<User> getTop5UsersMorePurchases();
     long getCountOfPurchasesBetweenDates(Date start, Date end);
     List<Route> getRoutesWithStop(Stop stop);
-    Long getMaxStopOfRoutes();
     List<Route> getRoutsNotSell();
     List<Route> getTop3RoutesWithMaxRating();
     Service getMostDemandedService();
@@ -32,4 +32,6 @@ public interface ToursRepository {
     List<Stop> findStopByNameStartingWith(String prefix);
     List<Route> findRoutesBelowPrice(float price);
     List<Route> findRoutesWithStop(Stop stop);
+    Integer getMaxStopCountOfRoutes();
+    Optional<User> findByUsername(String username);
 }

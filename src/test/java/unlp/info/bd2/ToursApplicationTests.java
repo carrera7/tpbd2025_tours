@@ -263,26 +263,27 @@ class ToursApplicationTests {
 		assertThrows(ToursException.class, () -> this.toursService.createPurchase("100", route1, user1), "Constraint Violation");
 	}
  
-	// @Test
-	// void removePurchaseAndItems() throws ToursException {
-	// 	User user1 = this.toursService.createUser("user1", "1234", "Usuario Uno", "user1@gmail.com", dob1, "000111222333");
-	// 	Stop stop1 = this.toursService.createStop("Estadio Monumental", "Estadio de River Plate");
-	// 	Stop stop2 = this.toursService.createStop("Estadio La Bombonera", "Estadio de Boca Junions");
-	// 	Stop stop3 = this.toursService.createStop("Estadio Libertadores de America", "Estadio de Independiente");
-	// 	List<Stop> stops1 = new ArrayList<Stop>(Arrays.asList(stop1,stop2, stop3));
-	// 	Route route1 = this.toursService.createRoute("Estadios", 20000, 55.5f, 2, stops1);
-	// 	Supplier supplier1 = this.toursService.createSupplier("Supplier1", "000111");
-	// 	Service service1 = this.toursService.addServiceToSupplier("Servicio1", 500f, "primer servicio", supplier1);
-	// 	Service service2 = this.toursService.addServiceToSupplier("Servicio2", 1000f, "segundo servicio", supplier1);
-	// 	Purchase purchase1 = this.toursService.createPurchase("100", dyes, route1, user1);
-	// 	ItemService itemService1 = this.toursService.addItemToPurchase(service1, 1, purchase1);
-	// 	ItemService itemService2 = this.toursService.addItemToPurchase(service2, 2, purchase1);
-	// 	assertEquals(1, service1.getItemServiceList().size());
+	@Test
+	void removePurchaseAndItems() throws ToursException {
+		User user1 = this.toursService.createUser("user1", "1234", "Usuario Uno", "user1@gmail.com", dob1, "000111222333");
+		Stop stop1 = this.toursService.createStop("Estadio Monumental", "Estadio de River Plate");
+		Stop stop2 = this.toursService.createStop("Estadio La Bombonera", "Estadio de Boca Junions");
+		Stop stop3 = this.toursService.createStop("Estadio Libertadores de America", "Estadio de Independiente");
+		List<Stop> stops1 = new ArrayList<Stop>(Arrays.asList(stop1,stop2, stop3));
+		Route route1 = this.toursService.createRoute("Estadios", 20000, 55.5f, 2, stops1);
+		Supplier supplier1 = this.toursService.createSupplier("Supplier1", "000111");
+	
+		Service service1 = this.toursService.addServiceToSupplier("Servicio1", 500f, "primer servicio", supplier1);
+		Service service2 = this.toursService.addServiceToSupplier("Servicio2", 1000f, "segundo servicio", supplier1);
+		Purchase purchase1 = this.toursService.createPurchase("100", dyes, route1, user1);
+		ItemService itemService1 = this.toursService.addItemToPurchase(service1, 1, purchase1);
+		ItemService itemService2 = this.toursService.addItemToPurchase(service2, 2, purchase1);
+		assertEquals(1, service1.getItemServiceList().size());
 
-	// 	this.toursService.deletePurchase(purchase1);
-	// 	Optional<Purchase> purchase = this.toursService.getPurchaseByCode("100");
-	// 	assertFalse(purchase.isPresent());
-	// }
+		this.toursService.deletePurchase(purchase1);
+		Optional<Purchase> purchase = this.toursService.getPurchaseByCode("100");
+		assertFalse(purchase.isPresent());
+	}
 
 	@Test
 	void addReviewToPurchaseTest() throws ToursException {

@@ -23,8 +23,6 @@ public class Stop {
     private String description;
 
 
-    @ManyToMany(mappedBy = "stops", fetch = FetchType.LAZY) 
-    private List<Route> routes = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -50,18 +48,10 @@ public class Stop {
         this.description = description;
     }
 
-    public List<Route> getRoutes() {
-        return routes;
-    }
-
-    public void setRoutes(List<Route> routes) {
-        this.routes = routes;
-    }
-
       public Stop(String name, String description) {
         this.setName(name);
         this.setDescription(description);
-        this.routes= new ArrayList<>();
+        
     }
 
 }
