@@ -21,7 +21,6 @@ public interface ToursRepository {
     List<User> getTop5UsersMorePurchases();
     long getCountOfPurchasesBetweenDates(Date start, Date end);
     List<Route> getRoutesWithStop(Stop stop);
-    Long getMaxStopOfRoutes();
     List<Route> getRoutsNotSell();
     List<Route> getTop3RoutesWithMaxRating();
     Service getMostDemandedService();
@@ -32,4 +31,5 @@ public interface ToursRepository {
     List<Stop> findStopByNameStartingWith(String prefix);
     List<Route> findRoutesBelowPrice(float price);
     List<Route> findRoutesWithStop(Stop stop);
+    Integer getMaxStopCountOfRoutes();
 }

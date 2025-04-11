@@ -47,8 +47,8 @@ public class ToursServiceImpl implements ToursService{
             String phoneNumber) throws ToursException {
         try {
             User user = new User(username, password, fullName, email, birthdate, phoneNumber);
-            sessionFactory.getCurrentSession().persist(user);
-            return user;
+            User created_user =this.tourRepository.save(user);
+            return created_user;
         } catch (Exception e) {
             throw new ToursException("Error al crear y persistir User: " + e.getMessage());
         }
@@ -201,7 +201,6 @@ public class ToursServiceImpl implements ToursService{
     
         try {
             Route route = new Route(name, price, totalKm, maxNumberOfUsers, stops);
-            route.setStops(stops); // por si el constructor no lo hace
             sessionFactory.getCurrentSession().persist(route);
             return route;
         } catch (Exception e) {
@@ -533,24 +532,7 @@ public class ToursServiceImpl implements ToursService{
     public void deletePurchase(Purchase purchase) throws ToursException {
         try {
             Session session = sessionFactory.getCurrentSession();
-
-            Purchase managedPurchase = session.contains(purchase)
-                ? purchase
-                : session.merge(purchase);
-
-            // Evitamos ConcurrentModification
-            Iterator<ItemService> iterator = managedPurchase.getItemServiceList().iterator();
-            while (iterator.hasNext()) {
-                ItemService item = iterator.next();
-                iterator.remove();                      
-                item.setPurchase(null);           
-                item.getService().getItemServiceList().remove(item); 
-                session.remove(item);           
-            }
-
-            session.flush();
-
-            session.remove(managedPurchase);
+            session.remove(purchase);
 
         } catch (Exception e) {
             throw new ToursException("Error al eliminar la compra con código: " + purchase.getCode() + " error: " + e);
@@ -722,14 +704,8 @@ public class ToursServiceImpl implements ToursService{
     @Override
     @Transactional
     public Long getMaxStopOfRoutes() {
-        Session session = sessionFactory.getCurrentSession();
-        String hql = """
-            SELECT MAX(SIZE(r.stops))
-            FROM Route r
-        """;
-    
-        return session.createQuery(hql, Long.class)
-                      .getSingleResult();
+        Integer result = this.tourRepository.getMaxStopCountOfRoutes();
+        return result != null ? result.longValue() : 0L;
     }
     
     /**

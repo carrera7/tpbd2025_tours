@@ -42,7 +42,7 @@ public class User {
     private boolean active;
 
     //fetch = FetchType.LAZY ?
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private List<Purchase> purchaseList;
 
     //agrego metodos

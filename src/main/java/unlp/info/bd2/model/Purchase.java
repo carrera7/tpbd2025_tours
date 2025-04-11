@@ -39,11 +39,11 @@ public class Purchase {
     private Route route;
 
     // Relación uno a uno con Review (opcional)
-    @OneToOne(mappedBy = "purchase", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(mappedBy = "purchase", cascade = {CascadeType.REMOVE, CascadeType.PERSIST},orphanRemoval = true)
     private Review review;
 
     // Relación con ItemService
-    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "purchase", cascade = {CascadeType.REMOVE,CascadeType.PERSIST }, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<ItemService> itemServiceList = new ArrayList<>();
 
     public Purchase(String code, Date date, Route route, User user){

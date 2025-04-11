@@ -32,7 +32,7 @@ public class ToursRepositoryImpl implements ToursRepository{
 
     @Override
     public <T> T save(T o) {
-        entityManager.persist(o);
+        session.getCurrentSession().save(o);
         return o;
     }
 
@@ -170,14 +170,14 @@ public class ToursRepositoryImpl implements ToursRepository{
     
     @Override
     @Transactional
-    public Long getMaxStopOfRoutes() {
-        Session currentSession = session.getCurrentSession();
-
-        Long maxStops = currentSession
-            .createQuery("SELECT MAX(SIZE(r.stops)) FROM Route r", Long.class)
-            .getSingleResult();
-
-        return maxStops != null ? maxStops : 0L;
+    public Integer getMaxStopCountOfRoutes() {
+        Session currentSesion = session.getCurrentSession();
+        String hql = """
+            SELECT MAX(SIZE(r.stops))
+            FROM Route r
+        """;
+        Integer  stopCount  =currentSesion.createQuery(hql, Integer.class).getSingleResult();
+        return stopCount;
     }
 
     

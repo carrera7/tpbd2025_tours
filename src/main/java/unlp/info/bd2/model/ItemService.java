@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
+import jakarta.persistence.FetchType;
 @Entity
 @Table(name = "itemService")
 public class ItemService {
@@ -31,12 +31,12 @@ public class ItemService {
      * simula la composición: si se elimina un Purchase, se eliminan sus ItemService. 
      * */
     // Relación Muchos a Uno con Purchase (composición: Purchase tiene muchos ItemService)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "purchase_id", nullable = false)
     private Purchase purchase;
 
     // Relación Muchos a Uno solo Service
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
 
